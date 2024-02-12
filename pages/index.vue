@@ -1,83 +1,177 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-app>
+    <div class="list-select">
+      <div class="recommendation-btn" >
+        <v-btn variant="text" depressed="true" color = "#FFFFFF">
+          おすすめ
+        </v-btn>
+      </div>
+      <div class="mylist-btn" >
+        <v-btn variant="text" depressed="true" color = "#FFFFFF">
+          マイリスト
+        </v-btn>
+      </div>
+    </div>
+    <v-divider thickness="5"></v-divider>
+    <div class="item-list">
+  <div class="wrap">
+    <div class="item">
+      <v-sheet>
+        <v-img
+          src="/image/image1.jpg"
+          aspect-ratio="1"
+        ></v-img>
+          <span>
+            ムルーア ベーシックワイドパンツ Mサイズ
+          </span>
+      </v-sheet>
+    </div>
+    <div class="item">
+      <v-sheet >
+        <v-img
+          src="/image/image2.jpg"
+          aspect-ratio="1"
+        ></v-img>
+          <span>
+            【数量限定】レディース　両耳用　ピアス　ゴールド　金　　高見え　上品　おしゃれ
+          </span>
+
+      </v-sheet>
+    </div>
+      <div class="item">
+        <v-sheet>
+          <v-img
+            src="/image/image3.jpg"
+            aspect-ratio="1"
+          ></v-img>
+            <span>
+              文豪ストレイドッグス　角川文庫コラボ缶バッジ　夢野久作
+            </span>
+        </v-sheet>
+      </div>
+      <div class="item">
+        <v-sheet>
+          <v-img
+            src="/image/image4.jpg"
+            aspect-ratio="1"
+          ></v-img>
+          <span>
+              薬屋のひとりごと マルイ　ポストカード　全5種
+            </span>
+        </v-sheet>
+      </div>
+      <div class="item">
+        <v-sheet>
+          <v-img
+            src="/image/image5.jpg"
+            aspect-ratio="1"
+          ></v-img>
+          <span>
+              ホロライブ 星街すいせい Shout in Crisis ライブグッズ Tシャツ
+            </span>
+        </v-sheet>
+      </div>
+      <div class="item">
+        <v-sheet>
+          <v-img
+            src="/image/image6.jpg"
+            aspect-ratio="1"
+          ></v-img>
+          <span>
+              『日本製』fou forétフーフォレ・セットアップスーツ グレー
+            </span>
+        </v-sheet>
+      </div>
+      <div class="item">
+        <v-sheet>
+          <v-img
+            src="/image/image7.jpg"
+            aspect-ratio="1"
+          ></v-img>
+          <span>
+              Eddie Bauer エディーバウアー ナイロンジャケット ロングコート Ｌ
+          </span>
+        </v-sheet>
+      </div>
+      <div class="item">
+        <v-sheet>
+          <v-img
+            src="/image/image8.jpg"
+            aspect-ratio="1"
+          ></v-img>
+            <span>
+              ノースフェイス　マウンテンライトジャケット
+            </span>
+        </v-sheet>
+      </div>
+      <div class="item">
+        <v-sheet >
+          <v-img
+            src="/image/image9.jpg"
+            aspect-ratio="1"
+          ></v-img>
+            <span>
+              RICH NOBLE ニットジャケット【L-LL相当】カーディガン　エレガント
+            </span>
+        </v-sheet>
+      </div>
+        <div class="item">
+          <v-sheet>
+            <v-img
+              src="/image/image10.jpg"
+              aspect-ratio="1"
+            ></v-img>
+              <span>
+                ✨ほぼ新品✨ルイヴィトン アエログラム ポルトフォイユ ブラザNM 長財布
+              </span>
+          </v-sheet>
+        </div>
+      
+    </div>
+
+    </div>
+  </v-app>
 </template>
 
+
 <script>
-export default {
-  name: 'IndexPage'
-}
+
+
 </script>
+
+<style>
+.list-select
+{
+  display: flex;
+  margin-top: 1rem;
+}
+.item-list
+{
+  margin-top: 1rem;
+}
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.item {
+  padding: 15px;
+  width: 20%;
+  background-color: #fff;
+  outline: #fff;
+}
+span{
+  font-size: 0.8rem;
+}
+
+@media not all and (min-width: 768px) {
+  .item {
+    width: 100%;
+  }
+
+  .item:not(:last-child) {
+    margin-bottom: 30px;
+  }
+}
+</style>
