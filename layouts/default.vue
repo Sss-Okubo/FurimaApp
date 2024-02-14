@@ -6,19 +6,18 @@
         <v-toolbar-title>COACHTECH</v-toolbar-title>
         <v-spacer />
         <v-text-field
-          v-model="search"
           label="なにをお探しですか？"
           sigle-line
           hide-details
           append-icon="mdi-magnify"
         />
-        <v-btn variant="text" depressed="true" color = "#FFFFFF">
+        <v-btn variant="text" depressed=true color = "#FFFFFF">
           ログイン
         </v-btn>             
-        <v-btn variant="text" depressed="true" color = "#FFFFFF">
+        <v-btn variant="text" depressed=true color = "#FFFFFF">
           マイページ
         </v-btn>
-        <v-btn variant="text" depressed="true" >
+        <v-btn variant="text" depressed=true >
             出品
         </v-btn>              
       </v-toolbar>
