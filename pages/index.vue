@@ -20,8 +20,9 @@
             <v-img
               :src= item.urls[0]
               aspect-ratio="1"
+              @click="clickImage(item.id)"
             ></v-img>
-            <span>
+            <span @click="clickImage(item.id)">
               {{ item.goods_name }}
             </span>
           </v-sheet>
@@ -52,7 +53,9 @@ export default {
       );
       this.goodsLists = resData.data.data;
     },
-    
+    clickImage(itemId) {
+      this.$router.push({ path: '/item', query: { id: itemId } });
+    }
   },
   
   created() {
@@ -87,6 +90,10 @@ export default {
 }
 span{
   font-size: 0.8rem;
+}
+
+.item:hover{
+  opacity:0.6
 }
 
 @media not all and (min-width: 768px) {
