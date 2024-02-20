@@ -15,68 +15,108 @@
         <div class="item-detail">
           <v-sheet
           border="md"
-          class="pa-6 text-white mx-auto"
+          class="pa-6 text-white mx-auto overflow-y-auto"
+          width="100%"
+          max-height="500"
+          max-width="500"
           >
-            <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>
-            <p class="mb-8">
-              {{ goods.goods_name }}
+          <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>
+          <p class="mb-4">
+            {{ goods.goods_name }}
+          </p>
+          <div class="item-price align-end">
+            <p class="text-h5 font-weight-bold">{{ price }}</p>&nbsp;
+            <p class="text-body-2 ">(税込)送料込み</p>
+          </div>
+          <div class="item-opinion  mb-4">
+            <div class="item-like">
+              <v-btn v-if="islike" @click="deleteLike(goods.id)" icon color="yellow" >
+                <v-icon large >mdi-star</v-icon>
+              </v-btn>
+              <v-btn v-else @click="insertLike(goods.id)" icon color="Glay" >
+                <v-icon large >mdi-star-outline</v-icon>
+              </v-btn><br>&nbsp;
+              <v-text class="text-caption">{{ likes.likeCount }}</v-text>
+            </div>
+            <div class="item-comment ml-4">
+              <v-btn @click="scrollToSection()" icon color="glay">
+                <v-icon large >mdi-chat-outline</v-icon>
+              </v-btn><br>&nbsp;
+              <v-text class="text-caption">{{ comments.length }}</v-text>
+            </div>
+          </div>
+          <div>
+            <v-btn
+              block
+              class="text-none text-black mb-4"
+              color="error" dark
+              size="x-large"
+              variant="flat"
+            >
+              購入する
+            </v-btn>
+          </div>
+          <div class="item-explane">
+            <h4 class="text-h6 font-weight-bold ">商品の説明</h4>
+            <p class="mb-4 text-body-2">
+              {{ goods.detail }}
             </p>
-            <div class="item-price align-end">
-              <p class="text-h5 font-weight-bold">{{ price }}</p>&nbsp;
-              <p class="text-body-2 ">(税込)送料込み</p>
-            </div>
-            <div class="item-opinion  mb-4">
-              <div class="item-like">
-                <v-btn v-if="islike" @click="deleteLike(goods.id)" icon color="yellow" >
-                  <v-icon large >mdi-star-outline</v-icon>
-                </v-btn>
-                <v-btn v-else @click="insertLike(goods.id)" icon color="Glay" >
-                  <v-icon large >mdi-star-outline</v-icon>
-                </v-btn><br>&nbsp;
-                <v-text class="text-caption">{{ likes.likeCount }}</v-text>
-              </div>
-              <div class="item-comment ml-4">
-                  <v-btn @click="deleteLike(goods.id)" icon color="glay">
-                    <v-icon large >mdi-chat-outline</v-icon>
-                  </v-btn><br>&nbsp;
-                  <v-text class="text-caption">{{ commentCount }}</v-text>
-                </div>
-            </div>
+          </div>
+          <div class="item-info">
+            <h4 class="text-h6 font-weight-bold ">商品の情報</h4>
+            <v-divider></v-divider>
+            <div class="item-category text-lg-subtitle-1 font-weight-bold mb-4">カテゴリ</div>
+            <div class="item-condition text-lg-subtitle-1 font-weight-bold mb-4">商品の状態</div>
+            <v-divider></v-divider>
+          </div>
+          <div class="comment" id="comment">          
+            <h4 class="text-lg-subtitle-1 font-weight-bold ">コメント</h4>
+            <v-divider></v-divider>
+            <v-card tile outlined class="mx-auto"  v-for="(comment, index) in comments" >
+              <v-list three-line>
+                <v-list-item :key="comment.id" >
+                  <v-list-item-avatar>
+                    <v-img src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title v-html="comment.user_id"></v-list-item-title>
+                    <v-list-item-subtitle v-html="comment.comment"></v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card>
+            <v-text-field label="商品へのコメント" placeholder="" v-model="newComment" color="red"></v-text-field>
             <v-btn
                 block
-                class="text-none text-black mb-4"
-                color="error" dark
+                class="mb-4"
+                color="red" dark
                 size="x-large"
                 variant="flat"
+                v-on:click="insertComment(goods.id)"
               >
-                購入する
+                コメントを送信する
               </v-btn>
-            <h4 class="text-h6 font-weight-bold mb-2">商品説明</h4>
-            <p class="mb-4">
-                {{ goods.detail }}
-            </p>
-            <h4 class="text-h6 font-weight-bold mb-4">商品の情報</h4>
-              <div class="item-category text-lg-subtitle-1 font-weight-bold mb-4">カテゴリ</div>
-              <div class="item-condition text-lg-subtitle-1 font-weight-bold mb-4">商品の状態</div>
-          </v-sheet>
-        </div>
+            <v-divider></v-divider>
+          </div>
+        </v-sheet>
       </div>
-    </v-container>
-  </v-app>
+    </div>
+  </v-container>
+</v-app>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      loginUserID: "2",
+      loginUserId: "1",
       islike: false,
-      likeCount: 0,
-      commentCount:30,
       goods: [],
       images: [],
       likes:[],
       price: "",
+      comments: [],
+      newComment: "",
     };
   },
   methods: {
@@ -104,30 +144,61 @@ export default {
       );
       this.likes = resData.data.data;
       this.islike = this.likes.isLike;
-
     },
     // liked
     async insertLike(id) {
       const sendData = {
           goods_id: id,
-          user_id: this.loginUserID,
+          user_id: this.loginUserId,
         };
         await this.$axios.post("http://127.0.0.1:8000/api/likes/", sendData);
-        this.getLikes(id, this.loginUserID);
+        this.getLikes(id, this.loginUserId);
     },
     // unliked
     async deleteLike(id) {
-      await this.$axios.delete("http://127.0.0.1:8000/api/likes/" + id + '/' + this.loginUserID);
-      this.getLikes(id, this.loginUserID);
+      await this.$axios.delete("http://127.0.0.1:8000/api/likes/" + id + '/' + this.loginUserId);
+      this.getLikes(id, this.loginUserId);
     },
+
+    // コメント取得
+    async getComments(goodsId) {
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8000/api/comments/" + goodsId 
+      );
+      this.comments = resData.data.data;
+      this.commentCount = comments.length();
+      //this.commentCount = this.commentscomments.commentCount;
+    },
+
+    // コメント登録
+    async insertComment(goodsId) {
+      const sendData = {
+        goods_id: goodsId,
+        user_id: this.loginUserId,
+        comment: this.newComment,
+      };
+      await this.$axios.post("http://127.0.0.1:8000/api/comments/", sendData);
+      this.getComments(goodsId);
+            this.newComment = "";
+    },
+
+    // 指定した要素までスクロール
+    scrollToSection() {
+      const container = document.querySelector('.pa-6');
+      const el = document.getElementById('comment');
+      this.$vuetify.goTo(el, { container: container });
+    },
+
   },
   created() {
     this.GoodsId =this.$route.query.id;
     this.getGoodsById(this.GoodsId);
     this.getImages(this.GoodsId);
-    this.getLikes(this.GoodsId,this.loginUserID);
+    this.getLikes(this.GoodsId, this.loginUserId);
+    this.getComments(this.GoodsId, this.loginUserId);
   },
 };
+
 </script>
 
 <style>
@@ -153,8 +224,15 @@ export default {
 .item-opinion{
 display: flex;
 }
-
-
+.text-h6 {
+  color: rgb(105, 105, 105);
+}
+.text-lg-subtitle-1{
+  color: rgb(105, 105, 105);;
+}
+.text-body-2{
+  color: rgb(105, 105, 105);;
+}
 @media not all and (min-width: 768px) {
   .item {
     width: 100%;
