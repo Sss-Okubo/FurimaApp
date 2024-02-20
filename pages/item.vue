@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <v-container>
       <div class="main">
         <div class="item-image">
@@ -58,20 +58,39 @@
           </div>
           <div class="item-explane">
             <h4 class="text-h6 font-weight-bold ">商品の説明</h4>
+
             <p class="mb-4 text-body-2">
               {{ goods.detail }}
             </p>
           </div>
           <div class="item-info">
             <h4 class="text-h6 font-weight-bold ">商品の情報</h4>
-            <v-divider></v-divider>
-            <div class="item-category text-lg-subtitle-1 font-weight-bold mb-4">カテゴリ</div>
-            <div class="item-condition text-lg-subtitle-1 font-weight-bold mb-4">商品の状態</div>
-            <v-divider></v-divider>
+
+            <div class="item-category mb-4">
+                <div class="text-lg-subtitle-1 font-weight-bold">
+                  カテゴリ
+                </div>
+                <v-chip  small class="ml-2" color="#80DEEA" dark>
+                  メンズ
+                </v-chip>
+                <v-chip  small class="ml-2" color="#80DEEA" dark>
+                  アクセサリ
+                </v-chip>
+            </div>
+
+            <div class="item-condition mb-4">
+              <div class="text-lg-subtitle-1 font-weight-bold">
+                商品の状態
+              </div>
+              <v-chip   small class="ml-2" color="#80DEEA" label dark>
+                  {{ goods.condition }}
+                </v-chip>              <!-- <p class="mb-4 text-body-2">
+                {{ goods.condition }}
+              </p> -->
+            </div>
           </div>
           <div class="comment" id="comment">          
             <h4 class="text-lg-subtitle-1 font-weight-bold ">コメント</h4>
-            <v-divider></v-divider>
             <v-card tile outlined class="mx-auto"  v-for="(comment, index) in comments" >
               <v-list three-line>
                 <v-list-item :key="comment.id" >
@@ -117,8 +136,11 @@ export default {
       price: "",
       comments: [],
       newComment: "",
+      
     };
+  
   },
+  
   methods: {
     // 商品取得（id)
     async getGoodsById(goodsId) {
@@ -198,7 +220,6 @@ export default {
     this.getComments(this.GoodsId, this.loginUserId);
   },
 };
-
 </script>
 
 <style>
@@ -223,6 +244,12 @@ export default {
 }
 .item-opinion{
 display: flex;
+}
+.item-condition{
+  display: flex;
+}
+.item-category{
+  display: flex;
 }
 .text-h6 {
   color: rgb(105, 105, 105);
