@@ -11,12 +11,26 @@
           hide-details
           append-icon="mdi-magnify"
         />
-        <v-btn variant="text" depressed=true color = "#FFFFFF">
-          ログイン
-        </v-btn>             
-        <v-btn variant="text" depressed=true color = "#FFFFFF">
-          マイページ
-        </v-btn>
+        <div v-if="isLogon">
+          <v-btn variant="text" depressed=true color = "#FFFFFF">
+            ログアウト
+          </v-btn>             
+        </div>
+        <div v-else >
+          <v-btn variant="text" depressed=true color = "#FFFFFF">
+            ログイン
+          </v-btn>       
+        </div>
+        <div v-if="isLogon">
+          <v-btn variant="text" depressed=true color = "#FFFFFF">
+            マイページ
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-btn variant="text" depressed=true color = "#FFFFFF">
+            会員登録
+          </v-btn>
+        </div>
         <v-btn variant="text" depressed=true >
             出品
         </v-btn>              
@@ -29,6 +43,31 @@
 </template>
 
 <script>
-
+import firebase from '~/plugins/firebase'
+export default {
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          alert('ログアウトが完了しました')
+          this.$router.replace('/')
+          this.isLogon = false
+        })
+    },
+  },
+  data() {
+    return {
+      isLogon: false,
+    }
+  },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.isLogon = true
+      }
+    })
+  },
+}
 </script>
- 

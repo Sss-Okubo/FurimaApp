@@ -12,6 +12,12 @@
     "chunkName": "pages/item"
   },
   {
+    "name": "login",
+    "path": "/login",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\login.vue",
+    "chunkName": "pages/login"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\index.vue",
