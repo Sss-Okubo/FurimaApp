@@ -1,0 +1,20 @@
+[
+  {
+    "name": "inspire",
+    "path": "/inspire",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\inspire.vue",
+    "chunkName": "pages/inspire"
+  },
+  {
+    "name": "item",
+    "path": "/item",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\item.vue",
+    "chunkName": "pages/item"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\index.vue",
+    "chunkName": "pages/index"
+  }
+]
