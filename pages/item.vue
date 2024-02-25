@@ -70,23 +70,20 @@
                 <div class="text-lg-subtitle-1 font-weight-bold">
                   カテゴリ
                 </div>
-                <v-chip  small class="ml-2" color="#80DEEA" dark>
-                  メンズ
-                </v-chip>
-                <v-chip  small class="ml-2" color="#80DEEA" dark>
-                  アクセサリ
-                </v-chip>
+                <div v-for="(category) in this.categories" >
+                  <v-chip  small class="ml-2" color="#80DEEA" dark>
+                    {{ category.category }}
+                  </v-chip>
+                </div>
             </div>
 
             <div class="item-condition mb-4">
               <div class="text-lg-subtitle-1 font-weight-bold">
                 商品の状態
               </div>
-              <v-chip   small class="ml-2" color="#80DEEA" label dark>
+                <v-chip   small class="ml-2" color="#80DEEA" label dark>
                   {{ goods.condition }}
-                </v-chip>              <!-- <p class="mb-4 text-body-2">
-                {{ goods.condition }}
-              </p> -->
+                </v-chip>
             </div>
           </div>
           <div class="comment" id="comment">          
@@ -136,7 +133,7 @@ export default {
       price: "",
       comments: [],
       newComment: "",
-      
+      categories:[],      
     };
   
   },
@@ -189,7 +186,6 @@ export default {
       );
       this.comments = resData.data.data;
       this.commentCount = comments.length();
-      //this.commentCount = this.commentscomments.commentCount;
     },
 
     // コメント登録
@@ -211,6 +207,14 @@ export default {
       this.$vuetify.goTo(el, { container: container });
     },
 
+    // カテゴリ取得
+    async getCategories(goodsId) {
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8000/api/categories/" + goodsId
+      );
+      this.categories = resData.data.data;
+    },
+
   },
   created() {
     this.GoodsId =this.$route.query.id;
@@ -218,6 +222,7 @@ export default {
     this.getImages(this.GoodsId);
     this.getLikes(this.GoodsId, this.loginUserId);
     this.getComments(this.GoodsId, this.loginUserId);
+    this.getCategories(this.GoodsId);
   },
 };
 </script>
