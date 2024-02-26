@@ -31,12 +31,12 @@
         <v-btn
           block
           class="mb-8"
-          color="blue"
+          color="red" dark
           size="large"
           variant="tonal" 
           @click="login"
         >
-          Log In
+          ログイン
         </v-btn>
       </v-card>
     </div>

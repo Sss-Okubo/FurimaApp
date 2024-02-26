@@ -12,12 +12,12 @@
           append-icon="mdi-magnify"
         />
         <div v-if="isLogon">
-          <v-btn variant="text" depressed=true color = "#FFFFFF">
+          <v-btn variant="text" depressed=true color = "#FFFFFF" @click="logout">
             ログアウト
           </v-btn>             
         </div>
         <div v-else >
-          <v-btn variant="text" depressed=true color = "#FFFFFF">
+          <v-btn variant="text" depressed=true color = "#FFFFFF" @click="toLogin">
             ログイン
           </v-btn>       
         </div>
@@ -27,7 +27,7 @@
           </v-btn>
         </div>
         <div v-else>
-          <v-btn variant="text" depressed=true color = "#FFFFFF">
+          <v-btn variant="text" depressed=true color = "#FFFFFF" @click="toRegister">
             会員登録
           </v-btn>
         </div>
@@ -46,6 +46,14 @@
 import firebase from '~/plugins/firebase'
 export default {
   methods: {
+    toRegister() {
+      this.$router.replace('/register')
+    },
+
+    toLogin() {
+      this.$router.replace('/login')
+    },
+    
     logout() {
       firebase
         .auth()

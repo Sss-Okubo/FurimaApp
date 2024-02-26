@@ -18,6 +18,12 @@
     "chunkName": "pages/login"
   },
   {
+    "name": "register",
+    "path": "/register",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\register.vue",
+    "chunkName": "pages/register"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\index.vue",
