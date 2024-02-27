@@ -53,6 +53,18 @@ export default {
     };
   },
   methods: {
+    async createUser() {
+      console.log("認証済");
+      // FirebaseのAuthオブジェクトを取得
+      var auth = firebase.auth();
+      var user = auth.currentUser;
+      const sendData = {
+        uid: user.uid,
+        email: user.email,
+      }
+      await this.$axios.post("http://127.0.0.1:8000/api/users/", sendData);
+    },
+
     register() {
       if (!this.email || !this.password) {
         alert("メールアドレスまたはパスワードが入力されていません。");
@@ -60,13 +72,12 @@ export default {
       }
       firebase
         .auth()
-        firebase
-        .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
-        .then((data) => {
-          data.user.sendEmailVerification().then(() => {
-            this.$router.replace("/index");
-          });
+        .then((resData) => {
+          // Usersテーブルにデータを作成
+          this.createUser();
+          // TOPページに遷移
+          this.$router.replace("/");
         })
         .catch((error) => {
           switch (error.code) {
@@ -81,6 +92,7 @@ export default {
               break;
             default:
               alert("エラーが起きました。しばらくしてから再度お試しください。");
+              console.log(error.code)
               break;
           }
         });

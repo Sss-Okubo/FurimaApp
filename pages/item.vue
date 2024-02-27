@@ -20,7 +20,7 @@
           max-height="500"
           max-width="500"
           >
-          <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>
+          <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>{{ this.loginUserId }}
           <p class="mb-4">
             {{ goods.goods_name }}
           </p>
@@ -125,7 +125,7 @@
 export default {
   data() {
     return {
-      loginUserId: "1",
+      loginUserId: "",
       islike: false,
       goods: [],
       images: [],
@@ -217,7 +217,8 @@ export default {
 
   },
   created() {
-    this.GoodsId =this.$route.query.id;
+    this.GoodsId = this.$route.query.itemId;
+    this.loginUserId = this.$route.query.userId;
     this.getGoodsById(this.GoodsId);
     this.getImages(this.GoodsId);
     this.getLikes(this.GoodsId, this.loginUserId);

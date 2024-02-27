@@ -11,6 +11,7 @@
           マイリスト
         </v-btn>
       </div>
+      <p> User： {{ this.userInfo.id }}</p>
     </div>
     <v-divider thickness="5"></v-divider>
     <div class="item-list">
@@ -34,16 +35,20 @@
 
 
 <script>
+import firebase from '~/plugins/firebase'
 export default {
   props: {
     image: String,
   },
   data() {
     return {
+      uid: "",
+      userId: "",
       newName: "",
       newEmail: "",
       goodsLists: [],
-
+      userInfo: [],
+      isLogon :false
     }
   },
   methods: {
@@ -53,17 +58,32 @@ export default {
       );
       this.goodsLists = resData.data.data;
     },
+
     clickImage(itemId) {
-      this.$router.push({ path: '/item', query: { id: itemId } });
+      this.$router.push({ path: '/item', query: { itemId: itemId,userId: this.userInfo.id } });
+    },
+
+    async getUser() {
+      if (this.isLogon) {
+          const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/users/" + this.uid );
+          this.userInfo = resData1.data.data[0];
+      }
     }
   },
   
   created() {
-    this.getGoodsList();
-  },
-  
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        if (user) {
+          this.uid = user.uid;
+          this.isLogon = true;
+          this.getUser();
+        }
+      }
+      this.getGoodsList();
+    })
+  }
 };
-
 </script>
 
 <style>
