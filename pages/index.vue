@@ -1,19 +1,20 @@
 <template>
   <v-app>
-    <div class="list-select">
-      <div class="recommendation-btn" >
-        <v-btn variant="text" depressed="true" color = "#FFFFFF">
+    <div class="list-select mb-0">
+      <v-tabs
+        v-model="tabs"
+        align-with-title
+      >
+        <v-tab href="#one" @click="clickRecommendation()">
           おすすめ
-        </v-btn>
-      </div>
-      <div class="mylist-btn" >
-        <v-btn variant="text" depressed="true" color = "#FFFFFF">
+        </v-tab>
+        <v-tab href="#two" @click="clickMylist()">
           マイリスト
-        </v-btn>
-      </div>
-      <p> User： {{ this.userInfo.id }}</p>
+        </v-tab>
+        <v-tabs-slider color="pink"></v-tabs-slider>
+      </v-tabs>
     </div>
-    <v-divider thickness="5"></v-divider>
+    <v-divider ></v-divider>
     <div class="item-list">
       <div class="wrap">
         <div class="item" v-for="item in goodsLists" :key="item.id">
@@ -58,11 +59,21 @@ export default {
       );
       this.goodsLists = resData.data.data;
     },
-
+    async getGoodsLiseMylike() {
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8000/api/goods/getMylist/" + this.userInfo.id
+      );
+      this.goodsLists = resData.data.data;
+    },
     clickImage(itemId) {
       this.$router.push({ path: '/item', query: { itemId: itemId,userId: this.userInfo.id } });
     },
-
+    clickRecommendation() {
+      this.getGoodsList();
+    },
+    clickMylist() { 
+      this.getGoodsLiseMylike();
+    },
     async getUser() {
       if (this.isLogon) {
           const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/users/" + this.uid );
@@ -98,7 +109,6 @@ export default {
 }
 .wrap {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -115,7 +125,9 @@ span{
 .item:hover{
   opacity:0.6
 }
-
+/* #lateral  {
+  margin-bottom: 0;
+} */
 @media not all and (min-width: 768px) {
   .item {
     width: 100%;
