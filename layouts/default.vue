@@ -12,26 +12,26 @@
           append-icon="mdi-magnify"
         />
         <div v-if="isLogon">
-          <v-btn variant="text" depressed=true color = "#FFFFFF" @click="logout">
+          <v-btn variant="text" color = "#FFFFFF" @click="logout">
             ログアウト
           </v-btn>             
         </div>
         <div v-else >
-          <v-btn variant="text" depressed=true color = "#FFFFFF" @click="toLogin">
+          <v-btn variant="text"  color = "#FFFFFF" @click="toLogin">
             ログイン
           </v-btn>       
         </div>
         <div v-if="isLogon">
-          <v-btn variant="text" depressed=true color = "#FFFFFF">
+          <v-btn variant="text"  color = "#FFFFFF">
             マイページ
           </v-btn>
         </div>
         <div v-else>
-          <v-btn variant="text" depressed=true color = "#FFFFFF" @click="toRegister">
+          <v-btn variant="text" color = "#FFFFFF" @click="toRegister">
             会員登録
           </v-btn>
         </div>
-        <v-btn variant="text" depressed=true >
+        <v-btn variant="text" >
             出品
         </v-btn>              
       </v-toolbar>

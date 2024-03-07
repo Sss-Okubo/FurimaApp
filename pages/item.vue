@@ -36,13 +36,13 @@
               <v-btn v-else @click="insertLike(goods.id)" icon color="Glay" >
                 <v-icon large >mdi-star-outline</v-icon>
               </v-btn><br>&nbsp;
-              <v-text class="text-caption">{{ likes.likeCount }}</v-text>
+              <p class="text-caption" name="likecount">{{ likes.likeCount }}</p>
             </div>
             <div class="item-comment ml-4">
               <v-btn @click="scrollToSection()" icon color="glay">
                 <v-icon large >mdi-chat-outline</v-icon>
               </v-btn><br>&nbsp;
-              <v-text class="text-caption">{{ comments.length }}</v-text>
+              <p class="text-caption" name="commentcount">{{ comments.length }}</p>
             </div>
           </div>
           <div>
@@ -52,6 +52,7 @@
               color="error" dark
               size="x-large"
               variant="flat"
+              v-on:click="clickBuy(goods.id)"
             >
               購入する
             </v-btn>
@@ -88,7 +89,7 @@
           </div>
           <div class="comment" id="comment">          
             <h4 class="text-lg-subtitle-1 font-weight-bold ">コメント</h4>
-            <v-card tile outlined class="mx-auto"  v-for="(comment, index) in comments" >
+            <v-card tile outlined class="mx-auto"  v-for="(comment, index) in this.comments" >
               <v-list three-line>
                 <v-list-item :key="comment.id" >
                   <v-list-item-avatar>
@@ -184,8 +185,7 @@ export default {
       const resData = await this.$axios.get(
         "http://127.0.0.1:8000/api/comments/" + goodsId 
       );
-      this.comments = resData.data.data;
-      this.commentCount = comments.length();
+      this.commentscomments = resData.data.data;
     },
 
     // コメント登録
@@ -214,7 +214,10 @@ export default {
       );
       this.categories = resData.data.data;
     },
-
+    clickBuy(goodsId) {
+    // 購入ボタン押下時
+      this.$router.push({ path: '/purchase', query: { itemId: goodsId, userId: this.loginUserId } });
+    },
   },
   created() {
     this.GoodsId = this.$route.query.itemId;

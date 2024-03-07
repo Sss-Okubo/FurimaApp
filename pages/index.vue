@@ -2,7 +2,6 @@
   <v-app>
     <div class="list-select mb-0">
       <v-tabs
-        v-model="tabs"
         align-with-title
       >
         <v-tab href="#one" @click="clickRecommendation()">
@@ -84,12 +83,12 @@ export default {
   
   created() {
     firebase.auth().onAuthStateChanged((user) => {
+      this.uid = "";
+      this.isLogon = false;
       if (user) {
-        if (user) {
           this.uid = user.uid;
           this.isLogon = true;
           this.getUser();
-        }
       }
       this.getGoodsList();
     })
