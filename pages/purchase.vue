@@ -1,4 +1,4 @@
-<template>
+<template v-slot:activator="{ on, attrs }">
   <v-app id="app">
     <v-container>
       <div class="main">
@@ -45,7 +45,62 @@
               class="text-body-2"
             ></v-text-field>
             <v-card-text  class="delivery-change text-body-2">
-              変更する
+              <!-- 配送先住所変更ダイアログ START-->
+              <v-dialog
+                v-model="dialog"
+                max-width="600px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    変更する
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="text-h5">住所の変更</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-text-field
+                          v-model="newPostno"
+                          label="郵便番号"
+                          class="text-body-2"
+                        ></v-text-field>
+                      </v-row>
+                      <v-row>
+                        <v-text-field
+                          v-model="newAddress1"
+                          label="住所"
+                          class="text-body-2"
+                        ></v-text-field>
+                      </v-row>
+                      <v-row>
+                        <v-text-field
+                          v-model="newAddress2"
+                          label="建物名"
+                          class="text-body-2"
+                        ></v-text-field>
+                      </v-row>
+                    </v-container>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="blue darken-1"
+                      text
+                      v-on:click="clickUpdate()"
+                    >
+                      更新する
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+              <!-- 配送先住所変更ダイアログ END-->
             </v-card-text >
           </div>
           <div class="main">
@@ -125,6 +180,7 @@ export default {
       ],
       postno: "3091127",
       address: "茨城県水戸市１１１１１１１１１１水戸ハイツ２０２２",
+      dialog: false,
     };
   
   },
@@ -167,6 +223,12 @@ export default {
     // 購入
     clickBuy() { 
       this.insertPurchase();
+    },
+    // 配送先更新
+    clickUpdate() {
+      this.postno = this.newPostno;
+      this.address = this.newAddress1 + this.newAddress2;
+      this.dialog = false;
     }
   },
   created() {
