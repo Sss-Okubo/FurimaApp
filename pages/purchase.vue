@@ -181,6 +181,9 @@ export default {
       postno: "3091127",
       address: "茨城県水戸市１１１１１１１１１１水戸ハイツ２０２２",
       dialog: false,
+      newAddress1: "",
+      newAddress2: "",      
+      newPostno:"",
     };
   
   },
@@ -229,7 +232,17 @@ export default {
       this.postno = this.newPostno;
       this.address = this.newAddress1 + this.newAddress2;
       this.dialog = false;
-    }
+    },
+    // 郵便番号から住所取得
+    async searchAddress() {
+      // フォームで入力された郵便番号を入れたAPIを呼び出す
+      this.$axios.$get(`/zipApi/api/search?zipcode=${this.newPostno}`).then((res) => {
+        // 該当住所が存在しない場合はnullになる
+        if (res.results == null) return
+        // 該当住所があればaddressに代入する
+        this.newAddress1 = res.results[0]['address1'] + res.results[0]['address2'] + res.results[0]['address3'];
+      })
+    },
   },
   created() {
     this.GoodsId = this.$route.query.itemId;
@@ -242,6 +255,13 @@ export default {
     // this.getComments(this.GoodsId, this.loginUserId);
     // this.getCategories(this.GoodsId);
   },
+  watch: {
+    newPostno(val) {
+      this.searchAddress();
+      // console.log('newPostnoの値が変わりました')
+      // console.log(val)
+    }
+  }
 };
 </script>
 

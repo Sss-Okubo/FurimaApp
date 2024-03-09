@@ -42,13 +42,13 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    '@nuxtjs/axios','@nuxtjs/proxy',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: '/',proxy: true,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -69,7 +69,12 @@ export default {
       }
     }
   },
-
+  proxy: { //  追記
+    '/zipApi/': {
+      target: 'https://zipcloud.ibsnet.co.jp',
+      pathRewrite: {'^/zipApi/': ''},
+    }
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   }
