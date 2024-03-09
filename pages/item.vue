@@ -185,7 +185,7 @@ export default {
       const resData = await this.$axios.get(
         "http://127.0.0.1:8000/api/comments/" + goodsId 
       );
-      this.commentscomments = resData.data.data;
+      this.comments = resData.data.data;
     },
 
     // コメント登録

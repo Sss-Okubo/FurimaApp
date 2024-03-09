@@ -21,26 +21,44 @@
             </div>
             <div class="payment-method">
               <v-select
+                v-model="selectedPlan"
+                item-text="label"
+                item-value="value"
                 :items="items"
                 outlined
                 class="text-body-2"
+                return-object
                 dense
-              ></v-select>
+              />
             </div>
             <div class="payment-change text-body-2">
-              変更する
             </div>
           </div>
           <div class="main">
-            <div class="delivery-label text-body-2">
+            <v-card-text class="delivery-label text-body-2" >
               配送先
-            </div>
-            <div class="delivery-method text-body-2">
-              {{ userInfo.address }}
-            </div>
-            <div class="delivery-change text-body-2">
+            </v-card-text>
+            <v-text-field
+              v-model="postno"
+              label="郵便番号"
+              readonly
+              class="text-body-2"
+            ></v-text-field>
+            <v-card-text  class="delivery-change text-body-2">
               変更する
-            </div>
+            </v-card-text >
+          </div>
+          <div class="main">
+            <v-card-text  class="delivery-label text-body-2">
+            </v-card-text >
+            <v-text-field
+              v-model="address"
+              label="住所"
+              readonly
+              class="text-body-2"
+            ></v-text-field>
+            <v-card-text  class="delivery-change text-body-2">
+            </v-card-text >
           </div>
         </div>
         <div class="right">
@@ -65,8 +83,8 @@
               <div class="price-label text-body-2">
                 支払方法
               </div>
-              <div class="price text-body-2">
-                クレジットカード
+              <div class="price text-body-2" >
+                {{selectedPlan.value}}
               </div>
             </div>
           </v-card>
@@ -76,7 +94,7 @@
               color="error" dark
               size="x-large"
               variant="flat"
-              v-on:click="clickBuy(goods.id)"
+              v-on:click="clickBuy()"
             >
               購入する
             </v-btn>
@@ -92,18 +110,21 @@ import Common from '@/plugins/common'
 export default {
   data() {
     return {
+      GoodsId:"",
       loginUserId: "",
       islike: false,
       goods: [],
       price: "",
       images: [],
       userInfo: [],
-      items: ['クレジットカード', '代引き', '電子マネー'],
-      item_status: 0,
-
-      comments: [],
-      newComment: "",
-      categories:[],      
+      selectedPlan: { label: 'クレジットカード'   , value: 'クレジットカード'  },
+      items: [
+        { label: 'クレジットカード'   , value: 'クレジットカード'  },
+        { label: '代引き' , value: '代引き'    },
+        { label: '電子マネー' , value: '電子マネー'   },
+      ],
+      postno: "3091127",
+      address: "茨城県水戸市１１１１１１１１１１水戸ハイツ２０２２",
     };
   
   },
@@ -128,6 +149,24 @@ export default {
     async getUser() {
         const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/usersByid/" + this.loginUserId );
         this.userInfo = resData1.data.data[0];
+    },
+    // 購入データ登録
+    async insertPurchase() { 
+      const sendData = {
+        user_id : this.loginUserId,
+        goods_id : this.GoodsId,
+        payment_method :this.selectedPlan.label,
+        postno :this.postno,
+        address1 :this.address,
+      };
+      console.log(this.message);
+      await this.$axios.post("http://127.0.0.1:8000/api/purchase/", sendData);
+      //this.newComment = "";
+      //this.getComment();
+    },
+    // 購入
+    clickBuy() { 
+      this.insertPurchase();
     }
   },
   created() {
@@ -136,7 +175,6 @@ export default {
     this.getGoodsById(this.$route.query.itemId);
     this.getImages(this.GoodsId);
     this.getUser();
-    this.item_status = 1;
     //this.getImages(this.GoodsId);
     // this.getLikes(this.GoodsId, this.loginUserId);
     // this.getComments(this.GoodsId, this.loginUserId);
