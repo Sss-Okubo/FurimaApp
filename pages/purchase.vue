@@ -55,6 +55,7 @@
                     color="primary"
                     v-bind="attrs"
                     v-on="on"
+                    text
                   >
                     変更する
                   </v-btn>
@@ -77,6 +78,7 @@
                           v-model="newAddress1"
                           label="住所"
                           class="text-body-2"
+                          required
                         ></v-text-field>
                       </v-row>
                       <v-row>
@@ -178,8 +180,8 @@ export default {
         { label: '代引き' , value: '代引き'    },
         { label: '電子マネー' , value: '電子マネー'   },
       ],
-      postno: "3091127",
-      address: "茨城県水戸市１１１１１１１１１１水戸ハイツ２０２２",
+      postno: "変更から入力してください",
+      address: "変更から入力してください",
       dialog: false,
       newAddress1: "",
       newAddress2: "",      
@@ -206,8 +208,10 @@ export default {
     },
     // ユーザ情報取得 
     async getUser() {
-        const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/usersByid/" + this.loginUserId );
-        this.userInfo = resData1.data.data[0];
+      const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/usersByid/" + this.loginUserId );
+      this.userInfo = resData1.data.data[0];
+      this.postno = this.userInfo.postno;
+      this.address = this.userInfo.address;
     },
     // 購入データ登録
     async insertPurchase() { 
