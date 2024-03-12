@@ -222,10 +222,8 @@ export default {
         postno :this.postno,
         address1 :this.address,
       };
-      console.log(this.message);
       await this.$axios.post("http://127.0.0.1:8000/api/purchase/", sendData);
-      //this.newComment = "";
-      //this.getComment();
+      this.$router.push('/', () => {})
     },
     // 購入
     clickBuy() { 
@@ -254,16 +252,10 @@ export default {
     this.getGoodsById(this.$route.query.itemId);
     this.getImages(this.GoodsId);
     this.getUser();
-    //this.getImages(this.GoodsId);
-    // this.getLikes(this.GoodsId, this.loginUserId);
-    // this.getComments(this.GoodsId, this.loginUserId);
-    // this.getCategories(this.GoodsId);
-  },
+    },
   watch: {
     newPostno(val) {
       this.searchAddress();
-      // console.log('newPostnoの値が変わりました')
-      // console.log(val)
     }
   }
 };

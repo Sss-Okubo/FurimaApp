@@ -21,6 +21,13 @@
     "_name": "_5b8e49f9"
   },
   {
+    "name": "mypage",
+    "path": "/mypage",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\mypage.vue",
+    "chunkName": "pages/mypage",
+    "_name": "_68443c4a"
+  },
+  {
     "name": "purchase",
     "path": "/purchase",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\purchase.vue",

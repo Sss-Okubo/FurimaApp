@@ -2,8 +2,8 @@
   <v-app id="app">
     <v-container>
       <v-toolbar density="compact">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
-        <v-toolbar-title>COACHTECH</v-toolbar-title>
+        <v-app-bar-nav-icon @click="toIndex"></v-app-bar-nav-icon>
+        <v-toolbar-title >COACHTECH</v-toolbar-title>
         <v-spacer />
         <v-text-field
           label="なにをお探しですか？"
@@ -22,7 +22,7 @@
           </v-btn>       
         </div>
         <div v-if="isLogon">
-          <v-btn class="ml-5" text >
+          <v-btn class="ml-5" text @click="toMypage">
             マイページ
           </v-btn>
         </div>
@@ -31,7 +31,7 @@
             会員登録
           </v-btn>
         </div>
-        <v-btn  class="ml-5">
+        <v-btn  class="ml-5" >
             出品
         </v-btn>              
       </v-toolbar>
@@ -53,7 +53,12 @@ export default {
     toLogin() {
       this.$router.replace('/login')
     },
-    
+    toMypage() {
+      this.$router.replace('/mypage')
+    },
+    toIndex() {
+      this.$router.push('/', () => {})
+    },
     logout() {
       firebase
         .auth()

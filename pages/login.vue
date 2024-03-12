@@ -18,8 +18,6 @@
         >
         </v-text-field>
         <v-text-field
-          :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-          :type="visible ? 'text' : 'password'"
           density="compact"
           placeholder="Enter your password"
           prepend-inner-icon="mdi-lock-outline"
