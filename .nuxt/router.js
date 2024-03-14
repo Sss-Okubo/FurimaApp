@@ -8,6 +8,7 @@ const _33046eea = () => interopDefault(import('..\\pages\\inspire.vue' /* webpac
 const _3df30e9a = () => interopDefault(import('..\\pages\\item.vue' /* webpackChunkName: "pages/item" */))
 const _5b8e49f9 = () => interopDefault(import('..\\pages\\login.vue' /* webpackChunkName: "pages/login" */))
 const _68443c4a = () => interopDefault(import('..\\pages\\mypage.vue' /* webpackChunkName: "pages/mypage" */))
+const _a75ef38e = () => interopDefault(import('..\\pages\\profile.vue' /* webpackChunkName: "pages/profile" */))
 const _2981d7a1 = () => interopDefault(import('..\\pages\\purchase.vue' /* webpackChunkName: "pages/purchase" */))
 const _31a36043 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages/register" */))
 const _dc32b23c = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
@@ -39,6 +40,10 @@ export const routerOptions = {
     path: "/mypage",
     component: _68443c4a,
     name: "mypage"
+  }, {
+    path: "/profile",
+    component: _a75ef38e,
+    name: "profile"
   }, {
     path: "/purchase",
     component: _2981d7a1,

@@ -3,49 +3,48 @@
     "name": "inspire",
     "path": "/inspire",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\inspire.vue",
-    "chunkName": "pages/inspire",
-    "_name": "_33046eea"
+    "chunkName": "pages/inspire"
   },
   {
     "name": "item",
     "path": "/item",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\item.vue",
-    "chunkName": "pages/item",
-    "_name": "_3df30e9a"
+    "chunkName": "pages/item"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\login.vue",
-    "chunkName": "pages/login",
-    "_name": "_5b8e49f9"
+    "chunkName": "pages/login"
   },
   {
     "name": "mypage",
     "path": "/mypage",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\mypage.vue",
-    "chunkName": "pages/mypage",
-    "_name": "_68443c4a"
+    "chunkName": "pages/mypage"
+  },
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\profile.vue",
+    "chunkName": "pages/profile"
   },
   {
     "name": "purchase",
     "path": "/purchase",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\purchase.vue",
-    "chunkName": "pages/purchase",
-    "_name": "_2981d7a1"
+    "chunkName": "pages/purchase"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\register.vue",
-    "chunkName": "pages/register",
-    "_name": "_31a36043"
+    "chunkName": "pages/register"
   },
   {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\index.vue",
-    "chunkName": "pages/index",
-    "_name": "_dc32b23c"
+    "chunkName": "pages/index"
   }
 ]

@@ -211,7 +211,15 @@ export default {
       const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/usersByid/" + this.loginUserId );
       this.userInfo = resData1.data.data[0];
       this.postno = this.userInfo.postno;
-      this.address = this.userInfo.address;
+      var $address1 = "";
+      var $address2 = "";
+      if (this.userInfo.address1 != null) {
+        $address1 = this.userInfo.address1
+      };
+      if (this.userInfo.address2 != null) {
+        $address2  = this.userInfo.address2
+      };
+      this.address = $address1 +  $address2 ;
     },
     // 購入データ登録
     async insertPurchase() { 

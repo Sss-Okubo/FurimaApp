@@ -2,7 +2,10 @@
   <v-app>
     
       <v-container class="mb-0">
-        <v-row>
+        <v-row justify="center" align-content="center">
+          <h3 class="mt-5">プロフィール設定</h3>
+        </v-row>
+        <v-row justify="center" align-content="center">
           <v-col cols="1"></v-col>
           <v-col cols="2">
             <v-avatar
@@ -12,48 +15,66 @@
               <v-img src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
             </v-avatar>
           </v-col>
-          <v-col cols="2" class="ma-15">
-            {{this.userInfo.name}}
-          </v-col>
           <v-col cols="3" class="ma-15">
             <v-btn
               color="red"
               large
               outlined
               @click="toProfile()"
-            >プロフィールを編集</v-btn>
+            >画像を選択する</v-btn>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field
+              value=""
+              label="ユーザ名"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field
+              value=""
+              label="郵便番号"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field
+              value=""
+              label="住所"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field
+              value=""
+              label="建物名"
+              outlined
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-btn
+                block
+                class="mb-4"
+                color="red" dark
+                size="x-large"
+                variant="flat"
+                v-on:click="insertComment(goods.id)"
+              >
+                更新する
+              </v-btn>
           </v-col>
         </v-row>
       </v-container>
-      <div class="list-select mb-0">
-      <v-tabs
-        align-with-title
-      >
-        <v-tab href="#one" @click="clickMySellList()">
-          出品一覧
-        </v-tab>
-        <v-tab href="#two" @click="clickMyBuyList()">
-          購入一覧
-        </v-tab>
-        <v-tabs-slider color="pink"></v-tabs-slider>
-      </v-tabs>
-    </div>
-    <v-divider ></v-divider>
-    <div class="item-list">
-      <div class="wrap">
-        <div class="item" v-for="item in goodsLists" :key="item.id">
-          <v-sheet>
-            <v-img
-              :src= item.urls[0]
-              aspect-ratio="1"
-            ></v-img>
-            <span>
-              {{ item.goods_name }}
-            </span>
-          </v-sheet>
-        </div>
-      </div>
-    </div>
   </v-app>
 </template>
 
