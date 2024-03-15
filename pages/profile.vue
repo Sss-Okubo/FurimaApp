@@ -12,16 +12,29 @@
             size="100"
             class="ma-10"
             >
-              <v-img src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
+              <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
+              <v-img v-else src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
             </v-avatar>
           </v-col>
           <v-col cols="3" class="ma-15">
-            <v-btn
+            <v-btn 
+              color="red"
+              large
+              outlined
+              @click="$refs.fileInput.click()">画像を選択する</v-btn>
+            <input
+              ref="fileInput"
+              type="file"
+              style="display: none"
+              @change="handleFileUpload"
+              accept="image/*"
+            />
+            <!-- <v-btn
               color="red"
               large
               outlined
               @click="toProfile()"
-            >画像を選択する</v-btn>
+            >画像を選択する</v-btn> -->
           </v-col>
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
@@ -93,7 +106,8 @@ export default {
       newEmail: "",
       goodsLists: [],
       userInfo: [],
-      isLogon :false
+      isLogon: false,
+      imageUrl: null
     }
   },
   methods: {
@@ -123,6 +137,12 @@ export default {
         const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/users/" + this.uid );
         this.userInfo = resData1.data.data[0];
         this.getMySellList();
+      }
+    },
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.imageUrl = URL.createObjectURL(file);
       }
     }
   },
