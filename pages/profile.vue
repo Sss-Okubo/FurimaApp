@@ -152,10 +152,10 @@ export default {
     updateImage() {
       if (this.selectedFile) {
         const formData = new FormData();
-        formData.append('image', this.selectedFile);
+        formData.append('file', this.selectedFile);
         console.log(this.selectedFile)
-        // axiosなどを使ってサーバーにファイルを送信
-        this.axios.post('http://127.0.0.1:8000/api/profile/upload', formData)
+        // ファイルを送信
+        this.$axios.post("http://127.0.0.1:8000/api/users/upload/", formData)
           .then(response => {
             console.log('File uploaded successfully:', response.data);
           // ファイルのアップロードが成功した場合の処理を追加する
