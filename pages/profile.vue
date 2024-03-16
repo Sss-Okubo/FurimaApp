@@ -81,7 +81,7 @@
                 color="red" dark
                 size="x-large"
                 variant="flat"
-                v-on:click="insertComment(goods.id)"
+                v-on:click="clickUpdate()"
               >
                 更新する
               </v-btn>
@@ -107,7 +107,8 @@ export default {
       goodsLists: [],
       userInfo: [],
       isLogon: false,
-      imageUrl: null
+      imageUrl: null,
+      selectedFile:null
     }
   },
   methods: {
@@ -129,6 +130,9 @@ export default {
     clickMySellList() { 
       this.getMySellList();
     },
+    clickUpdate() {
+      this.updateImage();
+    },
     toProfile() { 
       this.$router.push('/profile', () => {})
     },
@@ -140,13 +144,32 @@ export default {
       }
     },
     handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.imageUrl = URL.createObjectURL(file);
+      this.selectedFile = event.target.files[0];
+      if (this.selectedFile) {
+        this.imageUrl = URL.createObjectURL(this.selectedFile);
+      }
+    },
+    updateImage() {
+      if (this.selectedFile) {
+        const formData = new FormData();
+        formData.append('image', this.selectedFile);
+        console.log(this.selectedFile)
+        // axiosなどを使ってサーバーにファイルを送信
+        this.axios.post('http://127.0.0.1:8000/api/profile/upload', formData)
+          .then(response => {
+            console.log('File uploaded successfully:', response.data);
+          // ファイルのアップロードが成功した場合の処理を追加する
+          })
+          .catch(error => {
+            console.error('Error uploading file:', error);
+          // ファイルのアップロード中にエラーが発生した場合の処理を追加する
+        });
+      } else {
+        console.error("No file selected.");
       }
     }
   },
-  
+
   created() {
     firebase.auth().onAuthStateChanged((user) => {
       this.uid = "";
