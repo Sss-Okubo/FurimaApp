@@ -8,8 +8,9 @@
             <v-avatar
             size="100"
             class="ma-10"
+            color="red"
             >
-              <v-img src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
+              <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
             </v-avatar>
           </v-col>
           <v-col cols="2" class="ma-15">
@@ -70,6 +71,7 @@ export default {
       userId: "",
       name: "",
       newEmail: "",
+      imageUrl:null,
       goodsLists: [],
       userInfo: [],
       isLogon :false
@@ -101,6 +103,7 @@ export default {
       if (this.isLogon) {
         const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/users/" + this.uid );
         this.userInfo = resData1.data.data[0];
+        this.imageUrl = this.userInfo.url;
         this.getMySellList();
       }
     }

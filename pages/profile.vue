@@ -11,9 +11,9 @@
             <v-avatar
             size="100"
             class="ma-10"
+            color="red"
             >
               <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
-              <v-img v-else src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
             </v-avatar>
           </v-col>
           <v-col cols="3" class="ma-15">
@@ -146,6 +146,7 @@ export default {
         this.name = this.userInfo.name;
         this.address1 = this.userInfo.address1;
         this.address2 = this.userInfo.address2;
+        this.imageUrl = this.userInfo.url;
         this.getMySellList();
       }
     },
