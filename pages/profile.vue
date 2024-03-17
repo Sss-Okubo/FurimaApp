@@ -29,12 +29,6 @@
               @change="handleFileUpload"
               accept="image/*"
             />
-            <!-- <v-btn
-              color="red"
-              large
-              outlined
-              @click="toProfile()"
-            >画像を選択する</v-btn> -->
           </v-col>
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
@@ -42,6 +36,7 @@
             <v-text-field
               value=""
               label="ユーザ名"
+              v-model="name"
               outlined
             ></v-text-field>
           </v-col>
@@ -51,6 +46,7 @@
             <v-text-field
               value=""
               label="郵便番号"
+              v-model="postno"
               outlined
             ></v-text-field>
           </v-col>
@@ -60,6 +56,7 @@
             <v-text-field
               value=""
               label="住所"
+              v-model="address1"
               outlined
             ></v-text-field>
           </v-col>
@@ -69,6 +66,7 @@
             <v-text-field
               value=""
               label="建物名"
+              v-model="address2"
               outlined
             ></v-text-field>
           </v-col>
@@ -103,11 +101,14 @@ export default {
       uid: "",
       userId: "",
       name: "",
-      newEmail: "",
+      postno: "",
+      address1: "",
+      address2: "",
       goodsLists: [],
       userInfo: [],
       isLogon: false,
       imageUrl: null,
+      uploadUrl:null,
       selectedFile:null
     }
   },
@@ -131,7 +132,7 @@ export default {
       this.getMySellList();
     },
     clickUpdate() {
-      this.updateImage();
+      this.updateProfile();
     },
     toProfile() { 
       this.$router.push('/profile', () => {})
@@ -140,8 +141,25 @@ export default {
       if (this.isLogon) {
         const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/users/" + this.uid );
         this.userInfo = resData1.data.data[0];
+        this.userId = this.userInfo.id;
+        this.postno = this.userInfo.postno;
+        this.name = this.userInfo.name;
+        this.address1 = this.userInfo.address1;
+        this.address2 = this.userInfo.address2;
         this.getMySellList();
       }
+    },
+    async updateUser() {
+      const sendData = {
+        id: this.userId,
+        name: this.name,
+        postno: this.postno,
+        address1: this.address1,
+        address2: this.address2,
+        url:this.uploadUrl
+      }
+      console.log(sendData)
+      await this.$axios.post("http://127.0.0.1:8000/api/users/update/", sendData);
     },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];
@@ -149,23 +167,26 @@ export default {
         this.imageUrl = URL.createObjectURL(this.selectedFile);
       }
     },
-    updateImage() {
+    updateProfile() {
       if (this.selectedFile) {
         const formData = new FormData();
         formData.append('file', this.selectedFile);
         console.log(this.selectedFile)
-        // ファイルを送信
+        // プロフィール写真を送信
         this.$axios.post("http://127.0.0.1:8000/api/users/upload/", formData)
           .then(response => {
-            console.log('File uploaded successfully:', response.data);
-          // ファイルのアップロードが成功した場合の処理を追加する
+            this.uploadUrl = response.data.url;
+            console.log("イメージ選択時の処理");
+            // プロフィールを編集
+            this.updateUser()
           })
           .catch(error => {
             console.error('Error uploading file:', error);
-          // ファイルのアップロード中にエラーが発生した場合の処理を追加する
         });
       } else {
-        console.error("No file selected.");
+        console.log("イメージ未選択時の処理");
+        // プロフィールを編集
+        this.updateUser()
       }
     }
   },
