@@ -49,6 +49,13 @@
     "_name": "_31a36043"
   },
   {
+    "name": "sell",
+    "path": "/sell",
+    "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\sell.vue",
+    "chunkName": "pages/sell",
+    "_name": "_3b8ed51c"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "C:\\\\Users\\\\bonch\\\\coachteckFurimapj\\\\pages\\\\index.vue",

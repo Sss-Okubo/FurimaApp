@@ -31,7 +31,7 @@
             会員登録
           </v-btn>
         </div>
-        <v-btn  class="ml-5" >
+        <v-btn  class="ml-5" @click="toSell">
             出品
         </v-btn>              
       </v-toolbar>
@@ -58,6 +58,9 @@ export default {
     },
     toIndex() {
       this.$router.push('/', () => {})
+    },
+    toSell() {
+      this.$router.push('/sell', () => {})
     },
     logout() {
       firebase

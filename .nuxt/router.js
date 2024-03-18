@@ -11,6 +11,7 @@ const _68443c4a = () => interopDefault(import('..\\pages\\mypage.vue' /* webpack
 const _a75ef38e = () => interopDefault(import('..\\pages\\profile.vue' /* webpackChunkName: "pages/profile" */))
 const _2981d7a1 = () => interopDefault(import('..\\pages\\purchase.vue' /* webpackChunkName: "pages/purchase" */))
 const _31a36043 = () => interopDefault(import('..\\pages\\register.vue' /* webpackChunkName: "pages/register" */))
+const _3b8ed51c = () => interopDefault(import('..\\pages\\sell.vue' /* webpackChunkName: "pages/sell" */))
 const _dc32b23c = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -52,6 +53,10 @@ export const routerOptions = {
     path: "/register",
     component: _31a36043,
     name: "register"
+  }, {
+    path: "/sell",
+    component: _3b8ed51c,
+    name: "sell"
   }, {
     path: "/",
     component: _dc32b23c,
