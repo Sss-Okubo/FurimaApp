@@ -157,7 +157,9 @@ export default {
         postno: this.postno,
         address1: this.address1,
         address2: this.address2,
-        url:this.uploadUrl
+      }
+      if (this.selectedFile) {
+        sendData['url']=this.uploadUrl;
       }
       console.log(sendData)
       await this.$axios.post("http://127.0.0.1:8000/api/users/update/", sendData);
