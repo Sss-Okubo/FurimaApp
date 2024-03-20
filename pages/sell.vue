@@ -11,17 +11,15 @@
           </v-col>
         </v-row>
         <v-row justify="center" align-content="center">
-          <v-col cols="1"></v-col>
-          <v-col cols="2">
-            <v-avatar
-            size="100"
-            class="ma-10"
-            color="red"
-            >
+          <v-col cols="4"></v-col>
+          <v-col cols="4">
               <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
-            </v-avatar>
           </v-col>
-          <v-col cols="3" class="ma-15">
+          <v-col cols="4"></v-col>
+        </v-row>
+        <v-row justify="center" align-content="center">
+          <v-col cols="5"></v-col>
+          <v-col cols="2">
             <v-btn 
               color="red"
               large
@@ -35,6 +33,7 @@
               accept="image/*"
             />
           </v-col>
+          <v-col cols="5"></v-col>
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
           <v-col cols="6">
@@ -49,7 +48,15 @@
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
           <v-col cols="6">
-            ここにリストアイテム
+            <v-combobox
+              v-model="selectedCategoriesItem"
+              :items="categories"
+              item-value="code"
+              item-text="value"
+              label="選択してください"
+              multiple
+              chips
+            ></v-combobox>
           </v-col>
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
@@ -59,7 +66,15 @@
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
           <v-col cols="6">
-            ここにリストアイテム
+            <v-combobox
+              v-model="selectedConditionItem"
+              :items="conditions"
+              item-value="code"
+              item-text="value"
+              label="選択してください"
+              multiple
+              chips
+            ></v-combobox>
           </v-col>
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
@@ -144,37 +159,23 @@ export default {
       uid: "",
       userId: "",
       name: "",
-      // postno: "",
-      // address1: "",
-      // address2: "",
+      postno: "",
+      address1: "",
+      address2: "",
       // goodsLists: [],
       // userInfo: [],
       // isLogon: false,
-      // imageUrl: null,
-      // uploadUrl:null,
-      // selectedFile:null
+      imageUrl: null,
+      uploadUrl:null,
+      selectedFile: null,
+      categories: [],
+      conditions: [],
+      selectedCategoriesItem: null,
+      selectedConditionItem: null,
     }
   },
   methods: {
-    // async getMyBuyList() {
-    //   const resData = await this.$axios.get(
-    //     "http://127.0.0.1:8000/api/goods/getMyBuyList/" + this.userInfo.id
-    //   );
-    //   this.goodsLists = resData.data.data;
-    // },
-    // async getMySellList() {
-    //   const resData = await this.$axios.get(
-    //     "http://127.0.0.1:8000/api/goods/getMySellList/" + this.userInfo.id
-    //   );
-    //   this.goodsLists = resData.data.data;
-    // },
-    clickMyBuyList() {
-      this.getMyBuyList();
-    },
-    clickMySellList() { 
-      this.getMySellList();
-    },
-    clickUpdate() {
+    clickSell() {
       this.updateProfile();
     },
     toProfile() { 
@@ -185,12 +186,6 @@ export default {
         const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/users/" + this.uid );
         this.userInfo = resData1.data.data[0];
         this.userId = this.userInfo.id;
-        this.postno = this.userInfo.postno;
-        this.name = this.userInfo.name;
-        this.address1 = this.userInfo.address1;
-        this.address2 = this.userInfo.address2;
-        this.imageUrl = this.userInfo.url;
-        // this.getMySellList();
       }
     },
     async updateUser() {
@@ -218,23 +213,35 @@ export default {
         const formData = new FormData();
         formData.append('file', this.selectedFile);
         console.log(this.selectedFile)
-        // プロフィール写真を送信
+        // 商品写真を送信
         this.$axios.post("http://127.0.0.1:8000/api/users/upload/", formData)
           .then(response => {
             this.uploadUrl = response.data.url;
             console.log("イメージ選択時の処理");
-            // プロフィールを編集
-            this.updateUser()
+            // 画像テーブルにInsert
+            //this.updateSell()
           })
           .catch(error => {
-            console.error('Error uploading file:', error);
+            //console.error('Error uploading file:', error);
         });
       } else {
         console.log("イメージ未選択時の処理");
-        // プロフィールを編集
-        this.updateUser()
+        // 商品テーブルInsert
+        //this.updateUser()
       }
-    }
+    },
+    // コード取得
+    async getCode(type) {
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8000/api/codes/" + type 
+      );
+      if (type == 1) {
+        this.categories = resData.data.data;
+      };
+      if (type == 2) {
+        this.conditions = resData.data.data;
+      };
+    },
   },
 
   created() {
@@ -242,13 +249,18 @@ export default {
       this.uid = "";
       this.isLogon = false;
       if (user) {
-          this.uid = user.uid;
-          this.isLogon = true;
-          this.getUser();
+        this.uid = user.uid;
+        this.isLogon = true;
+        this.getUser();
       }
     })
+    // カテゴリ表示用のデータ取得
+    this.getCode(1);
+
+    // 状態表示用のデータ取得
+    this.getCode(2);
   }
-};
+}
 </script>
 
 <style>
