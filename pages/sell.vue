@@ -1,149 +1,108 @@
 <template>
   <v-app>
-    
-      <v-container class="mb-0">
-        <v-row justify="center" align-content="center">
-          <h3 class="ma-5">商品の出品</h3>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h5>商品の画像</h5>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center">
-          <v-col cols="4"></v-col>
-          <v-col cols="4">
-              <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
-          </v-col>
-          <v-col cols="4"></v-col>
-        </v-row>
-        <v-row justify="center" align-content="center">
-          <v-col cols="5"></v-col>
-          <v-col cols="2">
-            <v-btn 
-              color="red"
-              large
-              outlined
-              @click="$refs.fileInput.click()">画像を選択する</v-btn>
-            <input
-              ref="fileInput"
-              type="file"
-              style="display: none"
-              @change="handleFileUpload"
-              accept="image/*"
-            />
-          </v-col>
-          <v-col cols="5"></v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h4>商品の詳細</h4>
-            <v-divider></v-divider>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h5>カテゴリー</h5>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-combobox
-              v-model="selectedCategoriesItem"
-              :items="categories"
-              item-value="code"
-              item-text="value"
-              label="選択してください"
-              multiple
-              chips
-            ></v-combobox>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h5>状態</h5>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-combobox
-              v-model="selectedConditionItem"
-              :items="conditions"
-              item-value="code"
-              item-text="value"
-              label="選択してください"
-              multiple
-              chips
-            ></v-combobox>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h4>商品名と説明</h4>
-            <v-divider></v-divider>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h5>商品名</h5>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mb-0 mt-0">
-          <v-col cols="6">
-            <v-text-field
-              value=""
-              label=""
-              v-model="postno"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h5>商品の説明</h5>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            ここにテキストエリア
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h4>販売価格</h4>
-            <v-divider></v-divider>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <h5>販売価格</h5>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-text-field
-              value=""
-              label="￥"
-              v-model="address1"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-btn
-                block
-                class="mb-4"
-                color="red" dark
-                size="x-large"
-                variant="flat"
-                v-on:click="clickSell()"
-              >
-                出品する
-              </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+
+    <v-container class="mb-0">
+      <v-row justify="center" align-content="center">
+        <h3 class="ma-5">商品の出品</h3>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h5>商品の画像</h5>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center">
+        <v-col cols="4"></v-col>
+        <v-col cols="4">
+          <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
+        </v-col>
+        <v-col cols="4"></v-col>
+      </v-row>
+      <v-row justify="center" align-content="center">
+        <v-col cols="5"></v-col>
+        <v-col cols="2">
+          <v-btn color="red" large outlined @click="$refs.fileInput.click()">画像を選択する</v-btn>
+          <input ref="fileInput" type="file" style="display: none" @change="handleFileUpload" accept="image/*" />
+        </v-col>
+        <v-col cols="5"></v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h4>商品の詳細</h4>
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h5>カテゴリー</h5>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-combobox v-model="selectedCategoriesItem" :items="categories" item-value="code" item-text="value"
+            label="選択してください" multiple chips></v-combobox>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h5>状態</h5>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-combobox v-model="selectedConditionItem" :items="conditions" item-value="code" item-text="value"
+            label="選択してください" multiple chips></v-combobox>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h4>商品名と説明</h4>
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h5>商品名</h5>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mb-0 mt-0">
+        <v-col cols="6">
+          <v-text-field value="" label="入力してください" v-model="goodsName" outlined></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h5>商品の説明</h5>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-textarea solo name="" label="入力してください" v-model="goodsDetail" ></v-textarea>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h4>販売価格</h4>
+          <v-divider></v-divider>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <h5>販売価格</h5>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-text-field value="" label="￥"  outlined></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat" v-on:click="clickSell()">
+            出品する
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-app>
 </template>
 
@@ -158,10 +117,9 @@ export default {
     return {
       uid: "",
       userId: "",
-      name: "",
-      postno: "",
-      address1: "",
-      address2: "",
+      //name: "",
+      goodsName: "",
+      goodsDetail: "",
       // goodsLists: [],
       // userInfo: [],
       // isLogon: false,
@@ -176,7 +134,7 @@ export default {
   },
   methods: {
     clickSell() {
-      this.updateProfile();
+      this.updateGoods();
     },
     toProfile() { 
       this.$router.push('/profile', () => {})
@@ -188,27 +146,24 @@ export default {
         this.userId = this.userInfo.id;
       }
     },
-    async updateUser() {
-      const sendData = {
-        id: this.userId,
-        name: this.name,
-        postno: this.postno,
-        address1: this.address1,
-        address2: this.address2,
-      }
-      if (this.selectedFile) {
-        sendData['url']=this.uploadUrl;
-      }
-      console.log(sendData)
-      await this.$axios.post("http://127.0.0.1:8000/api/users/update/", sendData);
-    },
+    // async updateUser() {
+    //   const sendData = {
+    //     id: this.userId,
+    //     name: this.name,
+    //   }
+    //   if (this.selectedFile) {
+    //     sendData['url']=this.uploadUrl;
+    //   }
+    //   console.log(sendData)
+    //   await this.$axios.post("http://127.0.0.1:8000/api/users/update/", sendData);
+    // },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];
       if (this.selectedFile) {
         this.imageUrl = URL.createObjectURL(this.selectedFile);
       }
     },
-    updateProfile() {
+    updateGoods() {
       if (this.selectedFile) {
         const formData = new FormData();
         formData.append('file', this.selectedFile);
