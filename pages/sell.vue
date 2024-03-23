@@ -50,7 +50,7 @@
       <v-row justify="center" align-content="center" class="mt-0">
         <v-col cols="6">
           <v-combobox v-model="selectedConditionItem" :items="conditions" item-value="code" item-text="value"
-            label="選択してください" multiple chips></v-combobox>
+            label="選択してください" chips></v-combobox>
         </v-col>
       </v-row>
       <v-row justify="center" align-content="center" class="mt-0">
@@ -76,7 +76,7 @@
       </v-row>
       <v-row justify="center" align-content="center" class="mt-0">
         <v-col cols="6">
-          <v-textarea solo name="" label="入力してください" v-model="goodsDetail" ></v-textarea>
+          <v-textarea solo name="" label="入力してください" v-model="goodsDetail"></v-textarea>
         </v-col>
       </v-row>
       <v-row justify="center" align-content="center" class="mt-0">
@@ -92,7 +92,7 @@
       </v-row>
       <v-row justify="center" align-content="center" class="mt-0">
         <v-col cols="6">
-          <v-text-field value="" label="￥"  outlined></v-text-field>
+          <v-text-field value="" label="￥" v-model="price" type="number" outlined></v-text-field>
         </v-col>
       </v-row>
       <v-row justify="center" align-content="center" class="mt-0">
@@ -117,12 +117,10 @@ export default {
     return {
       uid: "",
       userId: "",
-      //name: "",
+      goodsId:"",
       goodsName: "",
       goodsDetail: "",
-      // goodsLists: [],
-      // userInfo: [],
-      // isLogon: false,
+      price:"",
       imageUrl: null,
       uploadUrl:null,
       selectedFile: null,
@@ -146,17 +144,51 @@ export default {
         this.userId = this.userInfo.id;
       }
     },
-    // async updateUser() {
-    //   const sendData = {
-    //     id: this.userId,
-    //     name: this.name,
-    //   }
-    //   if (this.selectedFile) {
-    //     sendData['url']=this.uploadUrl;
-    //   }
-    //   console.log(sendData)
-    //   await this.$axios.post("http://127.0.0.1:8000/api/users/update/", sendData);
-    // },
+    async storeGoodsInfo() {
+      // 商品登録
+        const sendData = {
+          user_id: this.userId,
+          goods_name: this.goodsName,
+          price: parseInt(this.price),
+          condition: this.selectedConditionItem.code,
+          detail: this.goodsDetail
+      }
+      this.$axios.post("http://127.0.0.1:8000/api/goods/", sendData)
+        .then(response => {
+          // カテゴリ登録
+          this.selectedCategoriesItem.forEach(
+            category => {
+              const sendCategoryData = {
+                goods_id: response.data.id,
+                category: category.code
+              }
+              this.$axios.post("http://127.0.0.1:8000/api/categories/", sendCategoryData)
+                .then(
+                  console.log("success  insertCategories")
+                )
+                .catch(error => {
+                  console.error('Error insertCategories:', error);
+                })
+            }
+          )
+          // 画像登録
+          const sendImageData = {
+            goods_id: response.data.id,
+            url: this.uploadUrl
+          }
+          console.log(sendImageData);
+          this.$axios.post("http://127.0.0.1:8000/api/images/", sendImageData)
+            .then(
+              console.log("success  insertImage")
+            )
+            .catch(error => {
+              console.error('Error insertImage:', error);
+            })
+        })
+        .catch(error => {
+          console.error('Error insertGoods:', error);
+        })
+    },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];
       if (this.selectedFile) {
@@ -173,16 +205,17 @@ export default {
           .then(response => {
             this.uploadUrl = response.data.url;
             console.log("イメージ選択時の処理");
-            // 画像テーブルにInsert
-            //this.updateSell()
+            // 商品情報登録
+            this.storeGoodsInfo();
+            
           })
           .catch(error => {
             //console.error('Error uploading file:', error);
         });
       } else {
         console.log("イメージ未選択時の処理");
-        // 商品テーブルInsert
-        //this.updateUser()
+        // 商品情報登録
+        this.storeGoodsInfo()
       }
     },
     // コード取得
