@@ -3,123 +3,103 @@
     <v-container>
       <div class="main">
         <div class="item-image">
-          <v-carousel >
-            <v-carousel-item v-for="image in images" :key="image.id" >
-              <v-img
-                :src= image.url
-                aspect-ratio="1"
-              ></v-img>
+          <v-carousel>
+            <v-carousel-item v-for="image in images" :key="image.id">
+              <v-img :src=image.url aspect-ratio="1"></v-img>
             </v-carousel-item>
-          </v-carousel >
+          </v-carousel>
         </div>
         <div class="item-detail">
-          <v-sheet
-          border="md"
-          class="pa-6 text-white mx-auto overflow-y-auto"
-          width="100%"
-          max-height="500"
-          max-width="500"
-          >
-          <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>{{ this.loginUserId }}
-          <p class="mb-4">
-            {{ goods.goods_name }}
-          </p>
-          <div class="item-price align-end">
-            <p class="text-h5 font-weight-bold">{{ price }}</p>&nbsp;
-            <p class="text-body-2 ">(税込)送料込み</p>
-          </div>
-          <div class="item-opinion  mb-4">
-            <div class="item-like">
-              <v-btn v-if="islike" @click="deleteLike(goods.id)" icon color="yellow" >
-                <v-icon large >mdi-star</v-icon>
-              </v-btn>
-              <v-btn v-else @click="insertLike(goods.id)" icon color="Glay" >
-                <v-icon large >mdi-star-outline</v-icon>
-              </v-btn><br>&nbsp;
-              <p class="text-caption" name="likecount">{{ likes.likeCount }}</p>
-            </div>
-            <div class="item-comment ml-4">
-              <v-btn @click="scrollToSection()" icon color="glay">
-                <v-icon large >mdi-chat-outline</v-icon>
-              </v-btn><br>&nbsp;
-              <p class="text-caption" name="commentcount">{{ comments.length }}</p>
-            </div>
-          </div>
-          <div>
-            <v-btn
-              block
-              class="text-none text-black mb-4"
-              color="error" dark
-              size="x-large"
-              variant="flat"
-              v-on:click="clickBuy(goods.id)"
-            >
-              購入する
-            </v-btn>
-          </div>
-          <div class="item-explane">
-            <h4 class="text-h6 font-weight-bold ">商品の説明</h4>
-
-            <p class="mb-4 text-body-2">
-              {{ goods.detail }}
+          <v-sheet border="md" class="pa-6 text-white mx-auto overflow-y-auto" width="100%" max-height="500"
+            max-width="500">
+            <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>{{ this.loginUserId }}
+            <p class="mb-4">
+              {{ goods.goods_name }}
             </p>
-          </div>
-          <div class="item-info">
-            <h4 class="text-h6 font-weight-bold ">商品の情報</h4>
+            <div class="item-price align-end">
+              <p class="text-h5 font-weight-bold">{{ price }}</p>&nbsp;
+              <p class="text-body-2 ">(税込)送料込み</p>
+            </div>
+            <div class="item-opinion  mb-4">
+              <div class="item-like">
+                <v-btn v-if="islike" @click="deleteLike(goods.id)" icon color="yellow">
+                  <v-icon large>mdi-star</v-icon>
+                </v-btn>
+                <v-btn v-else @click="insertLike(goods.id)" icon color="Glay">
+                  <v-icon large>mdi-star-outline</v-icon>
+                </v-btn><br>&nbsp;
+                <p class="text-caption" name="likecount">{{ likes.likeCount }}</p>
+              </div>
+              <div class="item-comment ml-4">
+                <v-btn @click="scrollToSection()" icon color="glay">
+                  <v-icon large>mdi-chat-outline</v-icon>
+                </v-btn><br>&nbsp;
+                <p class="text-caption" name="commentcount">{{ comments.length }}</p>
+              </div>
+            </div>
+            <div>
+              <v-btn block class="text-none text-black mb-4" color="error" dark size="x-large" variant="flat"
+                v-on:click="clickBuy(goods.id)">
+                購入する
+              </v-btn>
+            </div>
+            <div class="item-explane">
+              <h4 class="text-h6 font-weight-bold ">商品の説明</h4>
 
-            <div class="item-category mb-4">
+              <p class="mb-4 text-body-2">
+                {{ goods.detail }}
+              </p>
+            </div>
+            <div class="item-info">
+              <h4 class="text-h6 font-weight-bold ">商品の情報</h4>
+
+              <div class="item-category mb-4">
                 <div class="text-lg-subtitle-1 font-weight-bold">
                   カテゴリ
                 </div>
-                <div v-for="(category) in this.categories" >
-                  <v-chip  small class="ml-2" color="#80DEEA" dark>
-                    {{ category.category }}
+                <div v-for="(category) in this.categories">
+                  <v-chip small class="ml-2" color="#80DEEA" dark>
+                    {{ category.value }}
                   </v-chip>
                 </div>
-            </div>
-
-            <div class="item-condition mb-4">
-              <div class="text-lg-subtitle-1 font-weight-bold">
-                商品の状態
               </div>
-                <v-chip   small class="ml-2" color="#80DEEA" label dark>
-                  {{ goods.condition }}
+
+              <div class="item-condition mb-4">
+                <div class="text-lg-subtitle-1 font-weight-bold">
+                  商品の状態
+                </div>
+                <v-chip small class="ml-2" color="#80DEEA" label dark>
+                  {{ goods.value }}
                 </v-chip>
+              </div>
             </div>
-          </div>
-          <div class="comment" id="comment">          
-            <h4 class="text-lg-subtitle-1 font-weight-bold ">コメント</h4>
-            <v-card tile outlined class="mx-auto"  v-for="(comment, index) in this.comments" >
-              <v-list three-line>
-                <v-list-item :key="comment.id" >
-                  <v-list-item-avatar>
-                    <v-img src="https://cdn.vuetifyjs.com/images/lists/3.jpg"></v-img>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title v-html="comment.user_id"></v-list-item-title>
-                    <v-list-item-subtitle v-html="comment.comment"></v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card>
-            <v-text-field label="商品へのコメント" placeholder="" v-model="newComment" color="red"></v-text-field>
-            <v-btn
-                block
-                class="mb-4"
-                color="red" dark
-                size="x-large"
-                variant="flat"
-                v-on:click="insertComment(goods.id)"
-              >
+            <div class="comment" id="comment">
+              <h4 class="text-lg-subtitle-1 font-weight-bold ">コメント</h4>
+              <v-card tile outlined class="mx-auto" v-for="(comment, index) in this.comments">
+                <v-list three-line>
+                  <v-list-item :key="comment.id">
+                    <v-list-item-avatar>
+                      <v-img v-if="comment.url" :src="comment.url" contain></v-img>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title v-html="comment.user_id"></v-list-item-title>
+                      <v-list-item-subtitle v-html="comment.comment"></v-list-item-subtitle>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-card>
+              <v-text-field label="商品へのコメント" placeholder="" v-model="newComment" color="red"></v-text-field>
+              <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat"
+                v-on:click="insertComment(goods.id)">
                 コメントを送信する
               </v-btn>
-            <v-divider></v-divider>
-          </div>
-        </v-sheet>
+              <v-divider></v-divider>
+            </div>
+          </v-sheet>
+        </div>
       </div>
-    </div>
-  </v-container>
-</v-app>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
@@ -134,7 +114,8 @@ export default {
       price: "",
       comments: [],
       newComment: "",
-      categories:[],      
+      categories: [],
+      imageUrl: null
     };
   
   },
