@@ -1,45 +1,24 @@
 <template>
-  <div>    
-    <v-card
-      class="mx-auto pa-12 pb-8"
-      elevation="8"
-      max-width="448"
-      rounded="lg"
-    >
-    <v-card-text>
-      <h2 class="text-center"> 新規登録</h2>
-    </v-card-text>
-    <v-text-field
-      density="compact"
-      placeholder="Email address"
-      prepend-inner-icon="mdi-email-outline"
-      variant="outlined"
-      v-model="email" type="email" required
-    >
-    </v-text-field>
-    <v-text-field
-      :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-      :type="visible ? 'text' : 'password'"
-      density="compact"
-      placeholder="Enter your password"
-      prepend-inner-icon="mdi-lock-outline"
-      variant="outlined"
-      @click:append-inner="visible = !visible"
-      v-model="password" type="password" required
-    >
-    </v-text-field>
-    <v-btn
-      block
-      class="mb-8"
-      color="red" dark
-      size="large"
-      variant="tonal"
-      @click="register"
-    >
-      登録する
-    </v-btn>
+  <v-form ref="form" v-model="valid" lazy-validation>
+    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
+      <v-card-text>
+        <h2 class="text-center"> 新規登録</h2>
+      </v-card-text>
+      <v-text-field v-model="email" :rules="emailRules" label="E-mail" required @focus="hideAlert"></v-text-field>
+
+      <v-text-field v-model="password" :rules="passwordRules" label="password" required
+        @focus="hideAlert"></v-text-field>
+
+      <v-alert v-if="showAlert" border="right" colored-border type="error" elevation="2" v-model="password"
+        style="font-size: 10px;" class="mt-5">
+        {{ alertMessage }}
+      </v-alert>
+
+      <v-btn block class="mt-8" color="red" dark size="large" @click="register">
+        登録する
+      </v-btn>
     </v-card>
-  </div>
+  </v-form>
 </template>
 
 <script>
@@ -48,8 +27,19 @@ export default {
   layout: 'other',
   data() {
     return {
-      email: null,
-      password: null,
+      valid: true,
+      showAlert: false,
+      alertMessage: null,
+      email: "",
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      password: "",
+      passwordRules: [
+        v => !!v || 'Password is required',
+        v => (v && v.length >= 6) || 'Password must be at least 6 characters',
+      ],
     };
   },
   methods: {
@@ -67,7 +57,8 @@ export default {
 
     register() {
       if (!this.email || !this.password) {
-        alert("メールアドレスまたはパスワードが入力されていません。");
+        this.alertMessage = "メールアドレスまたはパスワードが入力されていません。";
+        this.showAlert = true;
         return;
       }
       firebase
@@ -77,26 +68,43 @@ export default {
           // Usersテーブルにデータを作成
           this.createUser();
           // TOPページに遷移
-          this.$router.replace("/");
+          this.$router.push('/', () => { });
         })
         .catch((error) => {
           switch (error.code) {
             case "auth/invalid-email":
-              alert("メールアドレスの形式が違います。");
+              this.alertMessage = "メールアドレスの形式が違います。";
+              this.showAlert = true;
               break;
             case "auth/email-already-in-use":
-              alert("このメールアドレスはすでに使われています。");
+              this.alertMessage = "このメールアドレスはすでに使われています。";
+              this.showAlert = true;
               break;
             case "auth/weak-password":
-              alert("パスワードは6文字以上で入力してください。");
+              this.alertMessage = "パスワードは6文字以上で入力してください。";
+              this.showAlert = true;
               break;
             default:
-              alert("エラーが起きました。しばらくしてから再度お試しください。");
+              this.alertMessage = "登録できませんでした。しばらくしてから再度お試しください。";
+              this.showAlert = true;
               console.log(error.code)
               break;
           }
         });
     },
+    validate() {
+      this.$refs.form.validate()
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation()
+    },
+    hideAlert() {
+      // テキストフィールドがフォーカスを受け取ったときにアラートを非表示にする
+      this.showAlert = false;
+    }
   },
 };
 </script>
