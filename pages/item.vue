@@ -12,7 +12,7 @@
         <div class="item-detail">
           <v-sheet border="md" class="pa-6 text-white mx-auto overflow-y-auto" width="100%" max-height="500"
             max-width="500">
-            <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>{{ this.loginUserId }}
+            <h4 class="text-h5 font-weight-bold mb-2">商品名</h4>
             <p class="mb-4">
               {{ goods.goods_name }}
             </p>
@@ -21,7 +21,7 @@
               <p class="text-body-2 ">(税込)送料込み</p>
             </div>
             <div class="item-opinion  mb-4">
-              <div class="item-like">
+              <div v-if="islogin" class="item-like">
                 <v-btn v-if="islike" @click="deleteLike(goods.id)" icon color="yellow">
                   <v-icon large>mdi-star</v-icon>
                 </v-btn>
@@ -88,8 +88,9 @@
                   </v-list-item>
                 </v-list>
               </v-card>
-              <v-text-field label="商品へのコメント" placeholder="" v-model="newComment" color="red"></v-text-field>
-              <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat"
+              <v-text-field v-if="islogin" label="商品へのコメント" placeholder="" v-model="newComment"
+                color="red"></v-text-field>
+              <v-btn v-if="islogin" block class="mb-4" color="red" dark size="x-large" variant="flat"
                 v-on:click="insertComment(goods.id)">
                 コメントを送信する
               </v-btn>
@@ -108,6 +109,7 @@ export default {
     return {
       loginUserId: "",
       islike: false,
+      islogin : false,
       goods: [],
       images: [],
       likes:[],
@@ -208,6 +210,9 @@ export default {
     this.getLikes(this.GoodsId, this.loginUserId);
     this.getComments(this.GoodsId, this.loginUserId);
     this.getCategories(this.GoodsId);
+    if (this.loginUserId) {
+      this.islogin = true;
+    }
   },
 };
 </script>

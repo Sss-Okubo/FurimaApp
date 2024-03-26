@@ -105,11 +105,10 @@
     </v-container>
   </v-app>
 </template>
-
-
 <script>
 import firebase from '~/plugins/firebase'
 export default {
+  middleware: 'authenticated',
   props: {
     image: String,
   },

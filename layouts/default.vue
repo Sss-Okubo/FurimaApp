@@ -68,7 +68,7 @@ export default {
         .signOut()
         .then(() => {
           alert('ログアウトが完了しました')
-          this.$router.replace('/')
+          this.$router.push('/', () => { })
           this.isLogon = false
         })
     },

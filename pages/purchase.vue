@@ -163,8 +163,9 @@
 </template>
 
 <script>
-import Common from '@/plugins/common'
+import firebase from '~/plugins/firebase'
 export default {
+  middleware: 'authenticated',
   data() {
     return {
       GoodsId:"",
@@ -210,7 +211,7 @@ export default {
     async getUser() {
       const resData1 = await this.$axios.get("http://127.0.0.1:8000/api/usersByid/" + this.loginUserId );
       this.userInfo = resData1.data.data[0];
-      this.postno = this.userInfo.postno;
+      this.postno = "";
       var $address1 = "";
       var $address2 = "";
       if (this.userInfo.address1 != null) {
@@ -255,6 +256,13 @@ export default {
     },
   },
   created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        this.$router.replace('/login')
+        const currentPath = this.$route.path
+        this.$router.push({ path: '/login', query: { redirect: currentPath } });
+      }
+    })
     this.GoodsId = this.$route.query.itemId;
     this.loginUserId = this.$route.query.userId;
     this.getGoodsById(this.$route.query.itemId);
