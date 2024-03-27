@@ -82,7 +82,7 @@
                       <v-img v-if="comment.url" :src="comment.url" contain></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                      <v-list-item-title v-html="comment.user_id"></v-list-item-title>
+                      <v-list-item-title v-html="comment.name"></v-list-item-title>
                       <v-list-item-subtitle v-html="comment.comment"></v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
