@@ -1,25 +1,39 @@
 <template>
   <v-app id="app">
     <v-container>
+      <v-dialog v-model="dialog" width="300">
+        <template v-slot:activator="{ on, attrs }">
+        </template>
+        <v-card class="align-center justify-center">
+          <v-card-title class=" grey lighten-2 ">
+            Message
+          </v-card-title>
+          <v-card-text>
+            <div class="mt-8">ログアウトしました</div>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" text @click="dialog = false">
+              OK
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
       <v-toolbar density="compact">
         <v-app-bar-nav-icon @click="toIndex"></v-app-bar-nav-icon>
-        <v-toolbar-title >COACHTECH</v-toolbar-title>
+        <v-toolbar-title>COACHTECH</v-toolbar-title>
         <v-spacer />
-        <v-text-field
-          label="なにをお探しですか？"
-          sigle-line
-          hide-details
-          append-icon="mdi-magnify"
-        />
+        <v-text-field label="なにをお探しですか？" sigle-line hide-details append-icon="mdi-magnify" />
         <div v-if="isLogon">
           <v-btn class="ml-5" text @click="logout">
             ログアウト
-          </v-btn>             
+          </v-btn>
         </div>
-        <div v-else >
-          <v-btn class="ml-5" text  @click="toLogin">
+        <div v-else>
+          <v-btn class="ml-5" text @click="toLogin">
             ログイン
-          </v-btn>       
+          </v-btn>
         </div>
         <div v-if="isLogon">
           <v-btn class="ml-5" text @click="toMypage">
@@ -31,9 +45,9 @@
             会員登録
           </v-btn>
         </div>
-        <v-btn  class="ml-5" @click="toSell">
-            出品
-        </v-btn>              
+        <v-btn class="ml-5" @click="toSell">
+          出品
+        </v-btn>
       </v-toolbar>
       <div>
         <nuxt />
@@ -67,7 +81,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          alert('ログアウトが完了しました')
+          this.dialog = true;
           this.$router.push('/', () => { })
           this.isLogon = false
         })
@@ -76,6 +90,7 @@ export default {
   data() {
     return {
       isLogon: false,
+      dialog: false,
     }
   },
   created() {
@@ -88,4 +103,5 @@ export default {
 }
 </script>
 <style>
+
 </style>
