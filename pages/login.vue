@@ -1,43 +1,23 @@
 <template>
-  <div>    
-    <v-card
-        class="mx-auto pa-12 pb-8"
-        elevation="8"
-        max-width="448"
-        rounded="lg"
-    >
+  <div>
+    <v-card class="mx-auto pa-12 pb-8" elevation="8" max-width="448" rounded="lg">
       <v-card-text>
         <h2 class="text-center"> ログイン</h2>
       </v-card-text>
-        <v-text-field
-          density="compact"
-          placeholder="Email address"
-          prepend-inner-icon="mdi-email-outline"
-          variant="outlined"
-          v-model="email" type="email" required
-        >
-        </v-text-field>
-        <v-text-field
-          density="compact"
-          placeholder="Enter your password"
-          prepend-inner-icon="mdi-lock-outline"
-          variant="outlined"
-          @click:append-inner="visible = !visible"
-          v-model="password" type="password" required
-        >
-        </v-text-field>
-        <v-btn
-          block
-          class="mb-8"
-          color="red" dark
-          size="large"
-          variant="tonal" 
-          @click="login"
-        >
-          ログイン
-        </v-btn>
-      </v-card>
-    </div>
+      <v-text-field density="compact" placeholder="Email address" prepend-inner-icon="mdi-email-outline"
+        variant="outlined" v-model="email" type="email" required>
+      </v-text-field>
+      <v-text-field density="compact" placeholder="Enter your password" prepend-inner-icon="mdi-lock-outline"
+        variant="outlined" @click:append-inner="visible = !visible" v-model="password" type="password" required>
+      </v-text-field>
+      <v-btn block class="mb-8" color="red" dark size="large" variant="tonal" @click="login">
+        ログイン
+      </v-btn>
+      <div class="d-flex justify-center mt-5">
+        <a href="/register">会員登録はこちら</a>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 

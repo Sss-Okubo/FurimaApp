@@ -2,7 +2,7 @@
   <v-app id="app">
     <v-container>
       <v-toolbar density="compact">
-        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="toIndex"></v-app-bar-nav-icon>
         <v-toolbar-title>COACHTECH</v-toolbar-title>
         <v-spacer />
       </v-toolbar>
@@ -22,6 +22,11 @@ export default {
     return {
       isLogon: false,
     }
+  },
+  methods: {
+    toIndex() {
+      this.$router.push('/', () => { })
+    },
   },
   created() {
   },

@@ -17,6 +17,9 @@
       <v-btn block class="mt-8" color="red" dark size="large" @click="register">
         登録する
       </v-btn>
+      <div class="d-flex justify-center mt-5">
+        <a href="/login">ログインはこちら</a>
+      </div>
     </v-card>
   </v-form>
 </template>
