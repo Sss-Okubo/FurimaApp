@@ -1,35 +1,27 @@
 <template>
   <v-app>
-    
-      <v-container class="mb-0">
-        <v-row>
-          <v-col cols="1"></v-col>
-          <v-col cols="2">
-            <v-avatar
-            size="100"
-            class="ma-10"
-            color="red"
-            >
-              <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
-            </v-avatar>
-          </v-col>
-          <v-col cols="2" class="ma-15">
-            {{this.userInfo.name}}
-          </v-col>
-          <v-col cols="3" class="ma-15">
-            <v-btn
-              color="red"
-              large
-              outlined
-              @click="toProfile()"
-            >プロフィールを編集</v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-      <div class="list-select mb-0">
-      <v-tabs
-        align-with-title
-      >
+
+    <v-container class="mb-0">
+      <v-row>
+        <v-col cols="1"></v-col>
+        <v-col cols="2">
+          <v-avatar size="100" class="ma-10" color="red">
+            <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
+            <v-icon v-else dark size="80">
+              mdi-account-circle
+            </v-icon>
+          </v-avatar>
+        </v-col>
+        <v-col cols="2" class="ma-15">
+          {{this.userInfo.name}}
+        </v-col>
+        <v-col cols="3" class="ma-15">
+          <v-btn color="red" large outlined @click="toProfile()">プロフィールを編集</v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
+    <div class="list-select mb-0">
+      <v-tabs align-with-title>
         <v-tab href="#one" @click="clickMySellList()">
           出品一覧
         </v-tab>
@@ -39,15 +31,12 @@
         <v-tabs-slider color="pink"></v-tabs-slider>
       </v-tabs>
     </div>
-    <v-divider ></v-divider>
+    <v-divider></v-divider>
     <div class="item-list">
       <div class="wrap">
         <div class="item" v-for="item in goodsLists" :key="item.id">
           <v-sheet>
-            <v-img
-              :src= item.urls[0]
-              aspect-ratio="1"
-            ></v-img>
+            <v-img :src=item.urls[0] aspect-ratio="1"></v-img>
             <span>
               {{ item.goods_name }}
             </span>

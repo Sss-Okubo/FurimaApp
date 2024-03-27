@@ -1,91 +1,53 @@
 <template>
   <v-app>
-    
-      <v-container class="mb-0">
-        <v-row justify="center" align-content="center">
-          <h3 class="mt-5">プロフィール設定</h3>
-        </v-row>
-        <v-row justify="center" align-content="center">
-          <v-col cols="1"></v-col>
-          <v-col cols="2">
-            <v-avatar
-            size="100"
-            class="ma-10"
-            color="red"
-            >
-              <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
-            </v-avatar>
-          </v-col>
-          <v-col cols="3" class="ma-15">
-            <v-btn 
-              color="red"
-              large
-              outlined
-              @click="$refs.fileInput.click()">画像を選択する</v-btn>
-            <input
-              ref="fileInput"
-              type="file"
-              style="display: none"
-              @change="handleFileUpload"
-              accept="image/*"
-            />
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-text-field
-              value=""
-              label="ユーザ名"
-              v-model="name"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-text-field
-              value=""
-              label="郵便番号"
-              v-model="postno"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-text-field
-              value=""
-              label="住所"
-              v-model="address1"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-text-field
-              value=""
-              label="建物名"
-              v-model="address2"
-              outlined
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-row justify="center" align-content="center" class="mt-0">
-          <v-col cols="6">
-            <v-btn
-                block
-                class="mb-4"
-                color="red" dark
-                size="x-large"
-                variant="flat"
-                v-on:click="clickUpdate()"
-              >
-                更新する
-              </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
+
+    <v-container class="mb-0">
+      <v-row justify="center" align-content="center">
+        <h3 class="mt-5">プロフィール設定</h3>
+      </v-row>
+      <v-row justify="center" align-content="center">
+        <v-col cols="1"></v-col>
+        <v-col cols="2">
+          <v-avatar size="100" class="ma-10" color="red">
+            <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
+            <v-icon v-else dark size="80">
+              mdi-account-circle
+            </v-icon>
+          </v-avatar>
+        </v-col>
+        <v-col cols="3" class="ma-15">
+          <v-btn color="red" large outlined @click="$refs.fileInput.click()">画像を選択する</v-btn>
+          <input ref="fileInput" type="file" style="display: none" @change="handleFileUpload" accept="image/*" />
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-text-field value="" label="ユーザ名" v-model="name" outlined></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-text-field value="" label="郵便番号" v-model="postno" outlined></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-text-field value="" label="住所" v-model="address1" outlined></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-text-field value="" label="建物名" v-model="address2" outlined></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row justify="center" align-content="center" class="mt-0">
+        <v-col cols="6">
+          <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat" v-on:click="clickUpdate()">
+            更新する
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-app>
 </template>
 
