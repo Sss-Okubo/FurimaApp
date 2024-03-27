@@ -61,14 +61,14 @@ import firebase from '~/plugins/firebase'
 export default {
   methods: {
     toRegister() {
-      this.$router.replace('/register')
+      this.$router.push('/register', () => { })
     },
 
     toLogin() {
-      this.$router.replace('/login')
+      this.$router.push('/login', () => { })
     },
     toMypage() {
-      this.$router.replace('/mypage')
+      this.$router.push('/mypage', () => { })
     },
     toIndex() {
       this.$router.push('/', () => {})
