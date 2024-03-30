@@ -1,164 +1,134 @@
 <template v-slot:activator="{ on, attrs }">
   <v-app id="app">
-    <v-container>
-      <div class="main">
-        <div class="left">
-          <div class="main">
-            <div class="item-image">
-              <v-img
-                :src= images.url
-                aspect-ratio="1"
-              ></v-img>
-            </div>
-            <div class="item-detail ml-10 mr-10">
-              <p>{{ goods.goods_name }}</p>
-              <p>{{ this.price }}</p>
-            </div>
-          </div>
-          <div class="main">
-            <div class="payment-label text-body-2">
-              支払方法
-            </div>
-            <div class="payment-method">
-              <v-select
-                v-model="selectedPlan"
-                item-text="label"
-                item-value="value"
-                :items="items"
-                outlined
-                class="text-body-2"
-                return-object
-                dense
-              />
-            </div>
-            <div class="payment-change text-body-2">
-            </div>
-          </div>
-          <div class="main">
-            <v-card-text class="delivery-label text-body-2" >
-              配送先
-            </v-card-text>
-            <v-text-field
-              v-model="postno"
-              label="郵便番号"
-              readonly
-              class="text-body-2"
-            ></v-text-field>
-            <v-card-text  class="delivery-change text-body-2">
-              <!-- 配送先住所変更ダイアログ START-->
-              <v-dialog
-                v-model="dialog"
-                max-width="600px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    color="primary"
-                    v-bind="attrs"
-                    v-on="on"
-                    text
-                  >
-                    変更する
-                  </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="text-h5">住所の変更</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-container>
-                      <v-row>
-                        <v-text-field
-                          v-model="newPostno"
-                          label="郵便番号"
-                          class="text-body-2"
-                        ></v-text-field>
-                      </v-row>
-                      <v-row>
-                        <v-text-field
-                          v-model="newAddress1"
-                          label="住所"
-                          class="text-body-2"
-                          required
-                        ></v-text-field>
-                      </v-row>
-                      <v-row>
-                        <v-text-field
-                          v-model="newAddress2"
-                          label="建物名"
-                          class="text-body-2"
-                        ></v-text-field>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      color="blue darken-1"
-                      text
-                      v-on:click="clickUpdate()"
-                    >
-                      更新する
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-              <!-- 配送先住所変更ダイアログ END-->
-            </v-card-text >
-          </div>
-          <div class="main">
-            <v-card-text  class="delivery-label text-body-2">
-            </v-card-text >
-            <v-text-field
-              v-model="address"
-              label="住所"
-              readonly
-              class="text-body-2"
-            ></v-text-field>
-            <v-card-text  class="delivery-change text-body-2">
-            </v-card-text >
-          </div>
-        </div>
-        <div class="right">
-          <v-card variant="outlined" class="mb-10">
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-container>
+        <div class="main">
+          <div class="left">
             <div class="main">
-              <div class="price-label text-body-2">
-                商品代金
+              <div class="item-image">
+                <v-img :src=images.url aspect-ratio="1"></v-img>
               </div>
-              <div class="price text-body-2">
-                {{ this.price }}
+              <div class="item-detail ml-10 mr-10">
+                <p>{{ goods.goods_name }}</p>
+                <p>{{ this.price }}</p>
               </div>
             </div>
             <div class="main">
-              <div class="price-label text-body-2">
-                支払金額
-              </div>
-              <div class="price text-body-2">
-                {{ this.price }}
-              </div>
-            </div>
-            <div class="main">
-              <div class="price-label text-body-2">
+              <div class="payment-label text-body-2">
                 支払方法
               </div>
-              <div class="price text-body-2" >
-                {{selectedPlan.value}}
+              <div class="payment-method">
+                <v-select v-model="selectedPlan" item-text="label" item-value="value" :items="items" outlined
+                  class="text-body-2" return-object dense />
+              </div>
+              <div class="payment-change text-body-2">
               </div>
             </div>
-          </v-card>
-          <v-btn
-              block
-              class="text-none text-black mb-4"
-              color="error" dark
-              size="x-large"
-              variant="flat"
-              v-on:click="clickBuy()"
-            >
+            <div class="main">
+              <v-card-text class="delivery-label text-body-2">
+                配送先
+              </v-card-text>
+              <v-text-field v-model="postno" label="郵便番号" readonly class="text-body-2"></v-text-field>
+              <v-card-text class="delivery-change text-body-2">
+                <!-- 配送先住所変更ダイアログ START-->
+                <v-dialog v-model="dialog" max-width="600px">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" v-bind="attrs" v-on="on" text>
+                      変更する
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="text-h5">住所の変更</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-text-field v-model="newPostno" label="郵便番号" class="text-body-2"
+                            :rules="postnoRules"></v-text-field>
+                        </v-row>
+                        <v-row>
+                          <v-text-field v-model="newAddress1" label="住所" class="text-body-2" required
+                            :rules="addressRules"></v-text-field>
+                        </v-row>
+                        <v-row>
+                          <v-text-field v-model="newAddress2" label="建物名" class="text-body-2"></v-text-field>
+                        </v-row>
+                      </v-container>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text v-on:click="clickUpdate()" :disabled="!valid">
+                        更新する
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+                <!-- 配送先住所変更ダイアログ END-->
+              </v-card-text>
+            </div>
+            <div class="main">
+              <v-card-text class="delivery-label text-body-2">
+              </v-card-text>
+              <v-text-field v-model="address" label="住所" readonly class="text-body-2"></v-text-field>
+              <v-card-text class="delivery-change text-body-2">
+              </v-card-text>
+            </div>
+          </div>
+          <div class="right">
+            <v-card variant="outlined" class="mb-10">
+              <div class="main">
+                <div class="price-label text-body-2">
+                  商品代金
+                </div>
+                <div class="price text-body-2">
+                  {{ this.price }}
+                </div>
+              </div>
+              <div class="main">
+                <div class="price-label text-body-2">
+                  支払金額
+                </div>
+                <div class="price text-body-2">
+                  {{ this.price }}
+                </div>
+              </div>
+              <div class="main">
+                <div class="price-label text-body-2">
+                  支払方法
+                </div>
+                <div class="price text-body-2">
+                  {{selectedPlan.value}}
+                </div>
+              </div>
+            </v-card>
+            <v-btn block class="text-none text-black mb-4" color="error" dark size="x-large" variant="flat"
+              v-on:click="clickBuy()">
               購入する
             </v-btn>
-        
+
+          </div>
         </div>
-      </div>
-    </v-container>
+        <v-dialog v-model="confirmDialog" width="300">
+          <v-card class="align-center justify-center">
+            <v-card-title class=" grey lighten-2 ">
+              Message
+            </v-card-title>
+            <v-card-text>
+              <div class="mt-8">購入しました。</div>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="confirmDialog = false">
+                閉じる
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+      </v-container>
+    </v-form>
   </v-app>
 </template>
 
@@ -186,11 +156,19 @@ export default {
       dialog: false,
       newAddress1: "",
       newAddress2: "",      
-      newPostno:"",
+      newPostno: "",
+      postnoRules: [
+        v => !!v || '郵便番号が入力されていません。',
+        v => /^\d{7}$/.test(v) || /^[0-9]{3}-[0-9]{4}$/.test(v) || '郵便番号の形式が正しくありません。例: 1234567 または 123-4567',
+      ],
+      addressRules: [
+        v => !!v || '住所が入力されていません。',
+      ],
+      valid: false,
+      dialog: false,
+      confirmDialog: false,
     };
-  
   },
-  
   methods: {
     // 商品取得（id)
     async getGoodsById(goodsId) {
@@ -214,6 +192,7 @@ export default {
       this.postno = "";
       var $address1 = "";
       var $address2 = "";
+      this.postno = this.userInfo.postno
       if (this.userInfo.address1 != null) {
         $address1 = this.userInfo.address1
       };
@@ -232,7 +211,8 @@ export default {
         address1 :this.address,
       };
       await this.$axios.post("http://127.0.0.1:8000/api/purchase/", sendData);
-      this.$router.push('/', () => {})
+      // ダイアログ表示
+      this.confirmDialog = true;
     },
     // 購入
     clickBuy() { 
@@ -254,6 +234,15 @@ export default {
         this.newAddress1 = res.results[0]['address1'] + res.results[0]['address2'] + res.results[0]['address3'];
       })
     },
+    validate() {
+      return this.$refs.form.validate()
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation()
+    },
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -272,8 +261,14 @@ export default {
   watch: {
     newPostno(val) {
       this.searchAddress();
+    },
+    confirmDialog(newValue) {
+      // ダイアログが閉じられた場合にのみリダイレクトを行う
+      if (!newValue) {
+        this.$router.push('/', () => { })
+      }
     }
-  }
+  },
 };
 </script>
 
