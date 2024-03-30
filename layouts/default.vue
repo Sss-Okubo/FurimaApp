@@ -15,7 +15,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" text @click="dialog = false">
-              OK
+              閉じる
             </v-btn>
           </v-card-actions>
         </v-card>
