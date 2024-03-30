@@ -86,6 +86,9 @@
                       <v-list-item-subtitle v-html="comment.comment"></v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
+                  <v-btn v-if="comment.user_id === loginUserId" icon @click="deleteComment(comment.id)" class="ml-3">
+                    <v-icon color="red">mdi-delete</v-icon>削除
+                  </v-btn>
                 </v-list>
               </v-card>
               <v-text-field v-if="islogin" label="商品へのコメント" placeholder="" v-model="newComment"
@@ -117,7 +120,8 @@ export default {
       comments: [],
       newComment: "",
       categories: [],
-      imageUrl: null
+      imageUrl: null,
+      goodsId:""
     };
   
   },
@@ -162,6 +166,11 @@ export default {
       await this.$axios.delete("http://127.0.0.1:8000/api/likes/" + id + '/' + this.loginUserId);
       this.getLikes(id, this.loginUserId);
     },
+    // コメント削除
+    async deleteComment(id) {
+      await this.$axios.delete("http://127.0.0.1:8000/api/comments/" + id);
+      this.getComments(this.goodsId);
+    },
 
     // コメント取得
     async getComments(goodsId) {
@@ -203,13 +212,13 @@ export default {
     },
   },
   created() {
-    this.GoodsId = this.$route.query.itemId;
-    this.loginUserId = this.$route.query.userId;
-    this.getGoodsById(this.GoodsId);
-    this.getImages(this.GoodsId);
-    this.getLikes(this.GoodsId, this.loginUserId);
-    this.getComments(this.GoodsId, this.loginUserId);
-    this.getCategories(this.GoodsId);
+    this.goodsId = this.$route.query.itemId;
+    this.loginUserId = parseInt(this.$route.query.userId);
+    this.getGoodsById(this.goodsId);
+    this.getImages(this.goodsId);
+    this.getLikes(this.goodsId, this.loginUserId);
+    this.getComments(this.goodsId, this.loginUserId);
+    this.getCategories(this.goodsId);
     if (this.loginUserId) {
       this.islogin = true;
     }
