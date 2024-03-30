@@ -1,53 +1,73 @@
 <template>
   <v-app>
-
-    <v-container class="mb-0">
-      <v-row justify="center" align-content="center">
-        <h3 class="mt-5">プロフィール設定</h3>
-      </v-row>
-      <v-row justify="center" align-content="center">
-        <v-col cols="1"></v-col>
-        <v-col cols="2">
-          <v-avatar size="100" class="ma-10" color="red">
-            <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
-            <v-icon v-else dark size="80">
-              mdi-account-circle
-            </v-icon>
-          </v-avatar>
-        </v-col>
-        <v-col cols="3" class="ma-15">
-          <v-btn color="red" large outlined @click="$refs.fileInput.click()">画像を選択する</v-btn>
-          <input ref="fileInput" type="file" style="display: none" @change="handleFileUpload" accept="image/*" />
-        </v-col>
-      </v-row>
-      <v-row justify="center" align-content="center" class="mt-0">
-        <v-col cols="6">
-          <v-text-field value="" label="ユーザ名" v-model="name" outlined></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row justify="center" align-content="center" class="mt-0">
-        <v-col cols="6">
-          <v-text-field value="" label="郵便番号" v-model="postno" outlined></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row justify="center" align-content="center" class="mt-0">
-        <v-col cols="6">
-          <v-text-field value="" label="住所" v-model="address1" outlined></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row justify="center" align-content="center" class="mt-0">
-        <v-col cols="6">
-          <v-text-field value="" label="建物名" v-model="address2" outlined></v-text-field>
-        </v-col>
-      </v-row>
-      <v-row justify="center" align-content="center" class="mt-0">
-        <v-col cols="6">
-          <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat" v-on:click="clickUpdate()">
-            更新する
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-container class="mb-0">
+        <v-row justify="center" align-content="center">
+          <h3 class="mt-5">プロフィール設定</h3>
+        </v-row>
+        <v-row justify="center" align-content="center">
+          <v-col cols="1"></v-col>
+          <v-col cols="2">
+            <v-avatar size="100" class="ma-10" color="red">
+              <v-img v-if="imageUrl" :src="imageUrl" contain></v-img>
+              <v-icon v-else dark size="80">
+                mdi-account-circle
+              </v-icon>
+            </v-avatar>
+          </v-col>
+          <v-col cols="3" class="ma-15">
+            <v-btn color="red" large outlined @click="$refs.fileInput.click()">画像を選択する</v-btn>
+            <input ref="fileInput" type="file" style="display: none" @change="handleFileUpload" accept="image/*" />
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field value="" label="ユーザ名" v-model="name" outlined :rules="nameRules"></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field value="" label="郵便番号" v-model="postno" outlined :rules="postnoRules"
+              @blur="handlePostnoBlur"></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field value="" label="住所" v-model="address1" outlined :rules="address1Rules"></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-text-field value="" label="建物名" v-model="address2" outlined></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row justify="center" align-content="center" class="mt-0">
+          <v-col cols="6">
+            <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat" v-on:click="clickUpdate()"
+              :disabled="!valid">
+              更新する
+            </v-btn>
+          </v-col>
+        </v-row>
+        <v-dialog v-model="dialog" width="300">
+          <v-card class="align-center justify-center">
+            <v-card-title class=" grey lighten-2 ">
+              Message
+            </v-card-title>
+            <v-card-text>
+              <div class="mt-8">登録しました。</div>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary" text @click="dialog = false">
+                閉じる
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-container>
+    </v-form>
   </v-app>
 </template>
 
@@ -71,9 +91,26 @@ export default {
       isLogon: false,
       imageUrl: null,
       uploadUrl:null,
-      selectedFile:null
+      selectedFile: null,
+      nameRules: [
+        v => !!v || 'ユーザ名が入力されていません。',
+      ],
+      postnoRules: [
+        v => !!v || '郵便番号が入力されていません。',
+        v => /^\d{7}$/.test(v) || /^[0-9]{3}-[0-9]{4}$/.test(v) || '郵便番号の形式が正しくありません。例: 1234567 または 123-4567',
+      ],
+      address1Rules: [
+        v => !!v || '住所が入力されていません。',
+      ],
+      valid: false,
+      dialog: false,
     }
   },
+  // watch: {
+  //   postno(val) {
+  //     this.searchAddress();
+  //   }
+  // },
   methods: {
     async getMyBuyList() {
       const resData = await this.$axios.get(
@@ -94,7 +131,9 @@ export default {
       this.getMySellList();
     },
     clickUpdate() {
-      this.updateProfile();
+      if (this.validate()) {
+        this.updateProfile();
+      }
     },
     toProfile() { 
       this.$router.push('/profile', () => {})
@@ -125,6 +164,8 @@ export default {
       }
       console.log(sendData)
       await this.$axios.post("http://127.0.0.1:8000/api/users/update/", sendData);
+      // ダイアログ表示
+      this.dialog = true;
     },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];
@@ -153,7 +194,29 @@ export default {
         // プロフィールを編集
         this.updateUser()
       }
-    }
+    },
+    validate() {
+      return this.$refs.form.validate()
+    },
+    reset() {
+      this.$refs.form.reset()
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation()
+    },
+    handlePostnoBlur() {
+      this.searchAddress();
+    },
+    // 郵便番号から住所取得
+    async searchAddress() {
+      // フォームで入力された郵便番号を入れたAPIを呼び出す
+      this.$axios.$get(`/zipApi/api/search?zipcode=${this.postno}`).then((res) => {
+        // 該当住所が存在しない場合はnullになる
+        if (res.results == null) return
+        // 該当住所があればaddressに代入する
+        this.address1 = res.results[0]['address1'] + res.results[0]['address2'] + res.results[0]['address3'];
+      })
+    },
   },
 
   created() {
