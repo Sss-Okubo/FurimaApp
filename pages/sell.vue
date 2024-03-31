@@ -127,7 +127,7 @@
 <script>
 import firebase from '~/plugins/firebase'
 export default {
-  middleware: 'authenticated',
+  // middleware: 'authenticated',
   props: {
     image: String,
   },

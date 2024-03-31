@@ -135,7 +135,6 @@
 <script>
 import firebase from '~/plugins/firebase'
 export default {
-  middleware: 'authenticated',
   data() {
     return {
       GoodsId:"",
@@ -246,17 +245,15 @@ export default {
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
-        this.$router.replace('/login')
-        const currentPath = this.$route.path
-        this.$router.push({ path: '/login', query: { redirect: currentPath } });
+      if (user) {
+        this.getUser();
       }
     })
     this.GoodsId = this.$route.query.itemId;
     this.loginUserId = this.$route.query.userId;
     this.getGoodsById(this.$route.query.itemId);
     this.getImages(this.GoodsId);
-    this.getUser();
+    // this.getUser();
     },
   watch: {
     newPostno(val) {
