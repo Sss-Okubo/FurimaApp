@@ -1,28 +1,22 @@
 <template>
   <v-app>
     <div class="list-select mb-0">
-      <v-tabs
-        align-with-title
-      >
-        <v-tab href="#one" @click="clickRecommendation()">
+      <v-tabs align-with-title v-model="selectedTab">
+        <v-tab href="#one" @click="clickRecommendation()" value="recommendation">
           おすすめ
         </v-tab>
-        <v-tab href="#two" @click="clickMylist()">
+        <v-tab href="#two" @click="clickMylist()" value="mylist">
           マイリスト
         </v-tab>
         <v-tabs-slider color="pink"></v-tabs-slider>
       </v-tabs>
     </div>
-    <v-divider ></v-divider>
+    <v-divider></v-divider>
     <div class="item-list">
       <div class="wrap">
         <div class="item" v-for="item in goodsLists" :key="item.id">
           <v-sheet>
-            <v-img
-              :src= item.urls[0]
-              aspect-ratio="1"
-              @click="clickImage(item.id)"
-            ></v-img>
+            <v-img :src=item.urls[0] aspect-ratio="1" @click="clickImage(item.id)"></v-img>
             <span @click="clickImage(item.id)">
               {{ item.goods_name }}
             </span>
@@ -48,7 +42,8 @@ export default {
       newEmail: "",
       goodsLists: [],
       userInfo: [],
-      isLogon :false
+      isLogon: false,
+      selectedTab: 'recommendation'
     }
   },
   methods: {
@@ -58,7 +53,7 @@ export default {
       );
       this.goodsLists = resData.data.data;
     },
-    async getGoodsLiseMylike() {
+    async getGoodsListMylike() {
       const resData = await this.$axios.get(
         "http://127.0.0.1:8000/api/goods/getMylist/" + this.userInfo.id
       );
@@ -71,7 +66,7 @@ export default {
       this.getGoodsList();
     },
     clickMylist() { 
-      this.getGoodsLiseMylike();
+      this.getGoodsListMylike();
     },
     async getUser() {
       if (this.isLogon) {
@@ -82,6 +77,7 @@ export default {
   },
   
   created() {
+    this.goodsLists = null;
     firebase.auth().onAuthStateChanged((user) => {
       this.uid = "";
       this.isLogon = false;
@@ -92,6 +88,14 @@ export default {
       }
       this.getGoodsList();
     })
+    this.$nuxt.$on('updateGoodslist', data => {
+      // リスト更新
+      this.goodsLists = data;
+    });
+    this.$nuxt.$on('updateGoodstab', () => {
+      // タブ更新
+      this.selectedTab = 'recommendation';
+    });
   }
 };
 </script>

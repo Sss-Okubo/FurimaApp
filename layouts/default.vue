@@ -24,7 +24,8 @@
         <v-app-bar-nav-icon @click="toIndex"></v-app-bar-nav-icon>
         <v-toolbar-title>COACHTECH</v-toolbar-title>
         <v-spacer />
-        <v-text-field label="なにをお探しですか？" sigle-line hide-details append-icon="mdi-magnify" />
+        <v-text-field v-model="searchWord" label="なにをお探しですか？" sigle-line hide-details append-icon="mdi-magnify"
+          @click:append="searchData" />
         <div v-if="isLogon">
           <v-btn class="ml-5" text @click="logout">
             ログアウト
@@ -59,6 +60,13 @@
 <script>
 import firebase from '~/plugins/firebase'
 export default {
+  data() {
+    return {
+      isLogon: false,
+      dialog: false,
+      searchWord: "",
+    }
+  },
   methods: {
     toRegister() {
       this.$router.push('/register', () => { })
@@ -71,7 +79,8 @@ export default {
       this.$router.push('/mypage', () => { })
     },
     toIndex() {
-      this.$router.push('/', () => {})
+      this.$router.push('/', () => { })
+      this.getGoodsList();
     },
     toSell() {
       this.$router.push('/sell', () => {})
@@ -86,12 +95,25 @@ export default {
           this.isLogon = false
         })
     },
-  },
-  data() {
-    return {
-      isLogon: false,
-      dialog: false,
-    }
+    async searchData() {
+      // 検索の処理を実行
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8000/api/goods/getSearchList/" + this.searchWord
+      );
+      let Lists = resData.data.data;
+      await this.$nuxt.$emit('updateGoodslist', Lists);
+      await this.$nuxt.$emit('updateGoodstab');
+      this.searchWord = "";
+    },
+    async getGoodsList() {
+      const resData = await this.$axios.get(
+        "http://127.0.0.1:8000/api/goods_all/"
+      );
+      this.goodsLists = resData.data.data;
+      let Lists = resData.data.data;
+      await this.$nuxt.$emit('updateGoodslist', Lists);
+      await this.$nuxt.$emit('updateGoodstab');
+    },  
   },
   created() {
     firebase.auth().onAuthStateChanged((user) => {
@@ -99,9 +121,8 @@ export default {
         this.isLogon = true
       }
     })
+    this.searchWord = "";
   },
 }
 </script>
-<style>
-
-</style>
+<style></style>
