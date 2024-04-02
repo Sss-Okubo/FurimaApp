@@ -98,7 +98,7 @@ export default {
     async searchData() {
       // 検索の処理を実行
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8000/api/goods/getSearchList/" + this.searchWord
+        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/getSearchList/" + this.searchWord
       );
       let Lists = resData.data.data;
       await this.$nuxt.$emit('updateGoodslist', Lists);
@@ -107,7 +107,7 @@ export default {
     },
     async getGoodsList() {
       const resData = await this.$axios.get(
-        "http://127.0.0.1:8000/api/goods_all/"
+        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods_all/"
       );
       this.goodsLists = resData.data.data;
       let Lists = resData.data.data;

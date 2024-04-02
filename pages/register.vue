@@ -55,7 +55,7 @@ export default {
         uid: user.uid,
         email: user.email,
       }
-      await this.$axios.post("http://127.0.0.1:8000/api/users/", sendData);
+      await this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/users/", sendData);
     },
 
     register() {
