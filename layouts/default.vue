@@ -96,13 +96,15 @@ export default {
         })
     },
     async searchData() {
-      // 検索の処理を実行
-      const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/getSearchList/" + this.searchWord
-      );
-      let Lists = resData.data.data;
-      await this.$nuxt.$emit('updateGoodslist', Lists);
-      await this.$nuxt.$emit('updateGoodstab');
+      if (this.searchWord.trim() !== ""){
+        // 検索の処理を実行
+        const resData = await this.$axios.get(
+          "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/getSearchList/" + this.searchWord
+        );
+        let Lists = resData.data.data;
+        await this.$nuxt.$emit('updateGoodslist', Lists);
+        await this.$nuxt.$emit('updateGoodstab');
+      }
       this.searchWord = "";
     },
     async getGoodsList() {
