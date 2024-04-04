@@ -49,13 +49,13 @@ export default {
   methods: {
     async getGoodsList() {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods_all/"
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods_all/"
       );
       this.goodsLists = resData.data.data;
     },
     async getGoodsListMylike() {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/getMylist/" + this.userInfo.id
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods/getMylist/" + this.userInfo.id
       );
       this.goodsLists = resData.data.data;
     },
@@ -70,7 +70,7 @@ export default {
     },
     async getUser() {
       if (this.isLogon) {
-          const resData1 = await this.$axios.get("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/users/" + this.uid );
+          const resData1 = await this.$axios.get("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/users/" + this.uid );
           this.userInfo = resData1.data.data[0];
       }
     }

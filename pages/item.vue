@@ -130,7 +130,7 @@ export default {
     // 商品取得（id)
     async getGoodsById(goodsId) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/" + goodsId
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods/" + goodsId
       );
       this.goods = resData.data.data[0];
       this.price = this.goods.price.toLocaleString('ja-JP',{style:'currency',currency:'JPY'});
@@ -139,7 +139,7 @@ export default {
     // 画像取得
     async getImages(goodsId) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/image/" + goodsId
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/image/" + goodsId
       );
       this.images = resData.data.data;
     },
@@ -147,7 +147,7 @@ export default {
     // お気に入り取得
     async getLikes(goodsId, loginID) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/likes/" + goodsId + '/' + loginID
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/likes/" + goodsId + '/' + loginID
       );
       this.likes = resData.data.data;
       this.islike = this.likes.isLike;
@@ -158,24 +158,24 @@ export default {
           goods_id: id,
           user_id: this.loginUserId,
         };
-        await this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/likes/", sendData);
+        await this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/likes/", sendData);
         this.getLikes(id, this.loginUserId);
     },
     // unliked
     async deleteLike(id) {
-      await this.$axios.delete("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/likes/" + id + '/' + this.loginUserId);
+      await this.$axios.delete("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/likes/" + id + '/' + this.loginUserId);
       this.getLikes(id, this.loginUserId);
     },
     // コメント削除
     async deleteComment(id) {
-      await this.$axios.delete("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/comments/" + id);
+      await this.$axios.delete("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/comments/" + id);
       this.getComments(this.goodsId);
     },
 
     // コメント取得
     async getComments(goodsId) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/comments/" + goodsId 
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/comments/" + goodsId 
       );
       this.comments = resData.data.data;
     },
@@ -187,7 +187,7 @@ export default {
         user_id: this.loginUserId,
         comment: this.newComment,
       };
-      await this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/comments/", sendData);
+      await this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/comments/", sendData);
       this.getComments(goodsId);
             this.newComment = "";
     },
@@ -202,7 +202,7 @@ export default {
     // カテゴリ取得
     async getCategories(goodsId) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/categories/" + goodsId
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/categories/" + goodsId
       );
       this.categories = resData.data.data;
     },

@@ -99,7 +99,7 @@ export default {
       if (this.searchWord.trim() !== ""){
         // 検索の処理を実行
         const resData = await this.$axios.get(
-          "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/getSearchList/" + this.searchWord
+          "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods/getSearchList/" + this.searchWord
         );
         let Lists = resData.data.data;
         await this.$nuxt.$emit('updateGoodslist', Lists);
@@ -109,7 +109,7 @@ export default {
     },
     async getGoodsList() {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods_all/"
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods_all/"
       );
       this.goodsLists = resData.data.data;
       let Lists = resData.data.data;

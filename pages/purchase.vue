@@ -172,7 +172,7 @@ export default {
     // 商品取得（id)
     async getGoodsById(goodsId) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/" + goodsId
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods/" + goodsId
       );
       this.goods = resData.data.data[0];
       this.price = this.goods.price.toLocaleString('ja-JP',{style:'currency',currency:'JPY'});
@@ -180,13 +180,13 @@ export default {
     // 画像取得
     async getImages(goodsId) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/image/" + goodsId
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/image/" + goodsId
       );
       this.images = resData.data.data[0];
     },
     // ユーザ情報取得 
     async getUser() {
-      const resData1 = await this.$axios.get("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/usersByid/" + this.loginUserId );
+      const resData1 = await this.$axios.get("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/usersByid/" + this.loginUserId );
       this.userInfo = resData1.data.data[0];
       this.postno = "";
       var $address1 = "";
@@ -209,7 +209,7 @@ export default {
         postno :this.postno,
         address1 :this.address,
       };
-      await this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/purchase/", sendData);
+      await this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/purchase/", sendData);
       // ダイアログ表示
       this.confirmDialog = true;
     },

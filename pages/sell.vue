@@ -186,7 +186,7 @@ export default {
     },
     async getUser() {
       if (this.isLogon) {
-        const resData1 = await this.$axios.get("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/users/" + this.uid );
+        const resData1 = await this.$axios.get("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/users/" + this.uid );
         this.userInfo = resData1.data.data[0];
         this.userId = this.userInfo.id;
       }
@@ -200,7 +200,7 @@ export default {
           condition: this.selectedConditionItem.code,
           detail: this.goodsDetail
       }
-      this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/goods/", sendData)
+      this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/goods/", sendData)
         .then(response => {
           // カテゴリ登録
           this.selectedCategoriesItem.forEach(
@@ -209,7 +209,7 @@ export default {
                 goods_id: response.data.id,
                 category: category.code
               }
-              this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/categories/", sendCategoryData)
+              this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/categories/", sendCategoryData)
                 .then(response => {
                   console.log("success  insertCategories");
                 })
@@ -224,7 +224,7 @@ export default {
             url: this.uploadUrl
           }
           console.log(sendImageData);
-          this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/images/", sendImageData)
+          this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/images/", sendImageData)
             .then(response => {
               console.log("success  insertImage")
               // ダイアログ表示
@@ -250,7 +250,7 @@ export default {
         formData.append('file', this.selectedFile);
         console.log(this.selectedFile)
         // 商品写真を送信
-        this.$axios.post("http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/users/upload/", formData)
+        this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/users/upload/", formData)
           .then(response => {
             this.uploadUrl = response.data.url;
             console.log("イメージ選択時の処理");
@@ -269,7 +269,7 @@ export default {
     // コード取得
     async getCode(type) {
       const resData = await this.$axios.get(
-        "http://ec2-52-198-95-158.ap-northeast-1.compute.amazonaws.com/api/codes/" + type 
+        "http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/codes/" + type 
       );
       if (type == 1) {
         this.categories = resData.data.data;
