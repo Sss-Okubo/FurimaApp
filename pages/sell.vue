@@ -97,8 +97,8 @@
         </v-row>
         <v-row justify="center" align-content="center" class="mt-0">
           <v-col cols="6">
-            <v-btn block class="mb-4" color="red" dark size="x-large" variant="flat" v-on:click="clickSell()"
-              :disabled="!valid">
+            <v-btn v-if="selectedFile" block class="mb-4" color="red" dark size="x-large" variant="flat"
+              v-on:click="clickSell()" :disabled="!valid">
               出品する
             </v-btn>
           </v-col>

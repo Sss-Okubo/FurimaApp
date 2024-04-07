@@ -1,69 +1,136 @@
-# coachteckFurimapj
+## 概要説明
 
-## Build Setup
+独自のブランドのアイテムを出品するフリマアプリ
 
-```bash
-# install dependencies
-$ yarn install
+## 機能一覧
 
-# serve with hot reload at localhost:3000
-$ yarn dev
+<details>
+<summary>会員登録</summary>
 
-# build for production and launch server
-$ yarn build
-$ yarn start
+1. 「会員登録」をクリック（未ログイン時のみ押下可能）  
+   ![alt text](image.png)
 
-# generate static project
-$ yarn generate
-```
+1. Email と password を入力して「登録する」をクリック
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+- Email：必須
+- password：必須,6 桁以上
+- 登録後はログイン状態になる
 
-## Special Directories
+  ![alt text](image-2.png)
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+</details>
 
-### `assets`
+<details>
+<summary>ログイン</summary>
 
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
+1. 「ログイン」をクリック（未ログイン時のみ押下可能）  
+   ![alt text](image-3.png)
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
+1. Email と password を入力して「ログイン」をクリック
 
-### `components`
+- Email：必須
+- password：必須
 
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
+  ![alt text](image-4.png)
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
+</details>
+<details>
+<summary>ログアウト</summary>
 
-### `layouts`
+1. 「ログアウト」をクリック（ログイン時のみ押下可能）  
+   ![alt text](image-5.png)
 
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
+1. 完了メッセージが表示されるので「閉じる」をクリック
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
+   ![alt text](image-6.png)
 
+</details>
+<details>
+<summary>商品一覧取得</summary>
 
-### `pages`
+1. 「ロゴ」をクリック
+1. 商品一覧が表示される
 
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
+   ![alt text](image-7.png)
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
+</details> 
+<details>
+<summary>商品詳細取得</summary>
 
-### `plugins`
+1. 商品一覧画面の画像をクリック  
+   ![alt text](image-8.png)
 
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
+1. 商品詳細が表示される
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
+   ![alt text](image-9.png)
 
-### `static`
+</details> 
+<details>
+<summary>ユーザ商品お気に入り一覧取得</summary>
 
-This directory contains your static files. Each file inside this directory is mapped to `/`.
+1. 「マイリスト」をクリック
 
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
+   ![alt text](image-10.png)
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
+1. お気に入り一覧が表示される
 
-### `store`
+   ![alt text](image-11.png)
 
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
+</details> 
+<details>
+<summary>ユーザ購入商品一覧取得</summary>
+</details> 
+<details>
+<summary>ユーザ情報取得</summary>
+</details> 
+<details>
+<summary>ユーザ出品商品一覧取得</summary>
+</details> 
+<details>
+<summary>プロフィール変更</summary>
+</details>
+<details>
+<summary>商品お気に入り追加</summary>
+</details>
+<details>
+<summary>商品お気に入り削除</summary>
+</details>
+<details>
+<summary>商品コメント追加</summary>
+</details>
+<details>
+<summary>商品コメント削除</summary>
+</details>
+<details>
+<summary>出品</summary>
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+1. 「出品」をクリック（未ログインの場合はログインへ）
+
+   ![alt text](image-12.png)
+
+1. 出品する商品情報を入力して、「出品する」ボタンを押下する。
+
+   ![alt text](image-13.png)
+
+</details>
+<details>
+<summary>購入</summary>
+</details>
+<details>
+<summary>配送先変更</summary>
+</details>
+<details>
+<summary>ユーザ情報登録</summary>
+</details>
+
+## 使用技術（実行環境）
+
+- Laravel Framework 8.83.27 / Mysql
+
+## テーブル設計
+
+<img width="684" alt="image" src="https://user-images.githubusercontent.com/118349010/212449477-92d75345-4b76-4515-8b55-33ff32777da2.png">
+
+## ER 図
+
+<img width="127" alt="image" src="https://user-images.githubusercontent.com/118349010/212449508-05b29c93-b4b4-414d-92cc-6cc415b9ba52.png">
