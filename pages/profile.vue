@@ -55,7 +55,7 @@
               Message
             </v-card-title>
             <v-card-text>
-              <div class="mt-8">登録しました。</div>
+              <div class="mt-8">更新しました。</div>
             </v-card-text>
             <v-divider></v-divider>
             <v-card-actions>
@@ -163,9 +163,14 @@ export default {
         sendData['url']=this.uploadUrl;
       }
       console.log(sendData)
-      await this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/users/update/", sendData);
+      this.$axios.post("http://ec2-35-72-4-140.ap-northeast-1.compute.amazonaws.com/api/users/update/", sendData)
+        .then(response => {
       // ダイアログ表示
-      this.dialog = true;
+          this.dialog = true;
+        })
+        .catch(error => {
+          console.error('Error updateUser:', error);
+        })
     },
     handleFileUpload(event) {
       this.selectedFile = event.target.files[0];

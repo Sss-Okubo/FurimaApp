@@ -235,7 +235,7 @@ export default {
             })
         })
         .catch(error => {
-          console.error('Error insertGoods:', error);
+          console.error('Error insertImage:', error);
         })
     },
     handleFileUpload(event) {
