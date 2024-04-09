@@ -114,6 +114,7 @@
    ![alt text](static/image/image-27.png)
 
 1. 完了メッセージが表示されるので「閉じる」をクリック
+   -  エラーで完了しない場合は、画像ファイルのサイズを小さくしてください。（サイズ制限未実装のため）
 
    ![alt text](static/image/image-28.png)
 
@@ -206,7 +207,8 @@
   ![alt text](static/image/image-13.png)
 
 1. 完了メッセージが表示されるので「閉じる」をクリック
-
+   -  エラーで完了しない場合は、画像ファイルのサイズを小さくしてください。（サイズ制限未実装のため）
+   
    ![alt text](static/image/image-14.png)
 
 </details>
